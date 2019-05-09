@@ -1,3 +1,3 @@
 export interface ScrapingService {
-    fetchDomData(url: string);
+  fetchDomData(url: string);
 }

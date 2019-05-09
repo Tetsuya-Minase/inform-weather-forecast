@@ -1,6 +1,6 @@
-import {RequestResponse} from '../domain/model/request-response';
+import { RequestResponse } from '../domain/model/request-response';
 
 export interface HttpRequest {
-    get(url: string): Promise<RequestResponse>;
-    post(param: any): Promise<RequestResponse>;
+  get(url: string): Promise<RequestResponse>;
+  post(param: any): Promise<RequestResponse>;
 }
