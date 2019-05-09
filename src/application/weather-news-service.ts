@@ -1,3 +1,3 @@
-export interface WeatherNewsService{
-    informTodayWeatherInfo(): void;
+export interface WeatherNewsService {
+  informTodayWeatherInfo(): void;
 }

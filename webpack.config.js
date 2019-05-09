@@ -3,24 +3,31 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-    mode: 'development',
-    entry: './src/app.ts',
-    target: 'node',
-    module: {
-        rules: [
-            {
-                test: /\.ts$/,
-                use: 'ts-loader'
-            }
+  mode: 'development',
+  entry: './src/app.ts',
+  target: 'node',
+  module: {
+    rules: [
+      {
+        test: /\.ts$/,
+        use: [
+          {
+            loader: 'ts-loader'
+          },
+          {
+            loader: 'eslint-loader'
+          }
         ]
-    },
-    resolve: {
-        extensions: ['.ts', '.js'],
-        modules: ['node_modules']
-    },
-    output: {
-        filename: 'app.js',
-        path: path.join(__dirname, 'dist')
-    },
-    externals: [nodeExternals()]
+      }
+    ]
+  },
+  resolve: {
+    extensions: ['.ts', '.js'],
+    modules: ['node_modules']
+  },
+  output: {
+    filename: 'app.js',
+    path: path.join(__dirname, 'dist')
+  },
+  externals: [nodeExternals()]
 };
