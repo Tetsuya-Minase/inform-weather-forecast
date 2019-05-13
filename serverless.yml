@@ -15,11 +15,10 @@ provider:
 custom:
   webpackIncludeModules: true
 functions:
-  #  weather-forecast:
-  #    handler: ./src/app.weatherForecast
-  #    events:
-  #      # - schedule: cron(30 15 * * ? *)
-  #      - schedule: rate(5 minutes)
+  weather-forecast:
+    handler: app.weatherForecast
+    events:
+      - schedule: cron(0 22 * * ? *)
   weather-debug:
     handler: app.weatherForecast
     events:
