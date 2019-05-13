@@ -27,8 +27,6 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
     const domData = await this._scrapingService.fetchDomData(
       this.weatherNewsUrl
     );
-    // let timeDataList: Array<Array<string>> = [];
-    // let precipDataList: Array<Array<string>> = [];
     const indexList = domData.window.document.querySelectorAll(
       '.indexList_item'
     );
