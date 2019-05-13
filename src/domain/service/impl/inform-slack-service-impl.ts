@@ -7,7 +7,7 @@ import { TYPES } from '../../../inversify.types';
 @injectable()
 export class InformSlackServiceImpl implements InformSlackService {
   private _httpRequest: HttpRequest;
-  private slackUrl = '';
+  private slackUrl = process.env.WEBHOOK;
 
   constructor(@inject(TYPES.HttpRequest) httpRequest: HttpRequest) {
     this._httpRequest = httpRequest;
