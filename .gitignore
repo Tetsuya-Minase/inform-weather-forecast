@@ -2,6 +2,7 @@
 
 # dist
 dist
+.serverless
 
 # dependencies
 node_modules

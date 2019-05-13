@@ -12,7 +12,7 @@ export class WeatherNews {
     this._weatherNewsService = weatherNewsService;
   }
 
-  public informWeatherNews() {
-    this._weatherNewsService.informTodayWeatherInfo();
+  public async informWeatherNews() {
+    await this._weatherNewsService.informTodayWeatherInfo();
   }
 }

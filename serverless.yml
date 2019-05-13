@@ -12,7 +12,8 @@ provider:
   region: ap-northeast-1
   environment:
     WEBHOOK: ${opt:webhook}
-
+custom:
+  webpackIncludeModules: true
 functions:
   #  weather-forecast:
   #    handler: ./src/app.weatherForecast
@@ -20,7 +21,7 @@ functions:
   #      # - schedule: cron(30 15 * * ? *)
   #      - schedule: rate(5 minutes)
   weather-debug:
-    handler: ./app.weatherForecast
+    handler: app.weatherForecast
     events:
       - http:
           method: get

@@ -2,7 +2,7 @@
   "name": "inform-slack-about-weather-forecast",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/app.js",
+  "main": "app.ts",
   "scripts": {
     "start": "node ./dist/app.js",
     "build": "webpack",
