@@ -4,6 +4,7 @@ import { WeatherNewsService } from '../weather-news-service';
 import { InformSlackService } from '../../domain/service/inform-slack-service';
 import { injectable, inject } from 'inversify';
 import { TYPES } from '../../inversify.types';
+import { WEATHER_FORECAST_AT_TOKYO } from '../../config/constant';
 import 'reflect-metadata';
 
 @injectable()
@@ -11,7 +12,7 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
   private _scrapingService: ScrapingService;
   private _converterService: ConverterServer;
   private _informSlackService: InformSlackService;
-  private weatherNewsUrl = 'https://weather.yahoo.co.jp/weather/13/4410.html';
+  private weatherNewsUrl = WEATHER_FORECAST_AT_TOKYO;
 
   constructor(
     @inject(TYPES.ScrapingService) scrapingService: ScrapingService,
