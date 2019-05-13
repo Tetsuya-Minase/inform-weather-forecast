@@ -1,0 +1,27 @@
+service:
+  name: weather-forecast-aws
+
+# Add the serverless-webpack plugin
+plugins:
+  - serverless-webpack
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: ap-northeast-1
+  environment:
+    WEBHOOK: ${opt:webhook}
+
+functions:
+  #  weather-forecast:
+  #    handler: ./src/app.weatherForecast
+  #    events:
+  #      # - schedule: cron(30 15 * * ? *)
+  #      - schedule: rate(5 minutes)
+  weather-debug:
+    handler: ./app.weatherForecast
+    events:
+      - http:
+          method: get
+          path: weatherdebug
