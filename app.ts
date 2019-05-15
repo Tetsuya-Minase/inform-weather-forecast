@@ -10,7 +10,6 @@ export const weatherForecast: APIGatewayProxyHandler = async (
 ) => {
   try {
     await container.get<WeatherNews>(TYPES.WeatherNews).informWeatherNews();
-    console.log('finish inform');
     return {
       statusCode: 204,
       body: ''

@@ -1,5 +1,5 @@
 import { ScrapingService } from '../../domain/service/scraping-service';
-import { ConverterServer } from '../../domain/service/converter-server';
+import { ConverterService } from '../../domain/service/converter-service';
 import { WeatherNewsService } from '../weather-news-service';
 import { InformSlackService } from '../../domain/service/inform-slack-service';
 import { injectable, inject } from 'inversify';
@@ -10,13 +10,13 @@ import 'reflect-metadata';
 @injectable()
 export class WeatherNewsServiceImpl implements WeatherNewsService {
   private _scrapingService: ScrapingService;
-  private _converterService: ConverterServer;
+  private _converterService: ConverterService;
   private _informSlackService: InformSlackService;
   private weatherNewsUrl = WEATHER_FORECAST_AT_TOKYO;
 
   constructor(
     @inject(TYPES.ScrapingService) scrapingService: ScrapingService,
-    @inject(TYPES.ConverterService) converterService: ConverterServer,
+    @inject(TYPES.ConverterService) converterService: ConverterService,
     @inject(TYPES.InformSlackService) informSlackService: InformSlackService
   ) {
     this._scrapingService = scrapingService;

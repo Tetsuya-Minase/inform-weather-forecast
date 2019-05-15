@@ -2,7 +2,7 @@ import { Container } from 'inversify';
 import { TYPES } from './inversify.types';
 import { WeatherNewsService } from './application/weather-news-service';
 import { WeatherNewsServiceImpl } from './application/impl/weather-news-service-impl';
-import { ConverterServer } from './domain/service/converter-server';
+import { ConverterService } from './domain/service/converter-service';
 import { ConverterServiceImpl } from './domain/service/impl/converter-service-impl';
 import { InformSlackService } from './domain/service/inform-slack-service';
 import { InformSlackServiceImpl } from './domain/service/impl/inform-slack-service-impl';
@@ -17,7 +17,7 @@ container
   .bind<WeatherNewsService>(TYPES.WeatherNewsService)
   .to(WeatherNewsServiceImpl);
 container
-  .bind<ConverterServer>(TYPES.ConverterService)
+  .bind<ConverterService>(TYPES.ConverterService)
   .to(ConverterServiceImpl);
 container
   .bind<InformSlackService>(TYPES.InformSlackService)
