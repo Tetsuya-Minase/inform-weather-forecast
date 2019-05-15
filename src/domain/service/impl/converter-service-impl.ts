@@ -1,8 +1,8 @@
-import { ConverterServer } from '../converter-server';
+import { ConverterService } from '../converter-service';
 import { injectable } from 'inversify';
 
 @injectable()
-export class ConverterServiceImpl implements ConverterServer {
+export class ConverterServiceImpl implements ConverterService {
   public domDataFormatter(domList) {
     const returnList: Array<any> = [];
     for (const dom of domList) {

@@ -3,6 +3,7 @@
 # dist
 dist
 .serverless
+.webpack
 
 # dependencies
 node_modules

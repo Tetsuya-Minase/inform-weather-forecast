@@ -1,4 +1,4 @@
-export interface ConverterServer {
+export interface ConverterService {
   domDataFormatter(domList);
   list2FullInformation(
     indexList: Array<Array<string>>,

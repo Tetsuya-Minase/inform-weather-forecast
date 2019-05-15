@@ -8,8 +8,12 @@
     "noImplicitAny": false,
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "types": ["node", "reflect-metadata"],
+    "types": ["node", "reflect-metadata", "jest"],
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
-  }
+    "emitDecoratorMetadata": true,
+  },
+  "exclude": [
+    "node_module",
+    "**/*.test.ts"
+  ]
 }
