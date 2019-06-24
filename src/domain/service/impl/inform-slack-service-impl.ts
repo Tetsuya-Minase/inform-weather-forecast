@@ -13,7 +13,7 @@ export class InformSlackServiceImpl implements InformSlackService {
     this._httpRequest = httpRequest;
   }
 
-  public informMessage(message: string) {
+  public async informMessage(message: string) {
     const param = {
       url: this.slackUrl,
       method: 'POST',
@@ -24,6 +24,7 @@ export class InformSlackServiceImpl implements InformSlackService {
         text: message
       }
     };
-    this._httpRequest.post(param);
+    console.info('request param:', param);
+    await this._httpRequest.post(param);
   }
 }
