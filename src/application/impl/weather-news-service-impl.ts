@@ -69,6 +69,6 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
     }\n重ね着：${detailData['layering']}\n熱中症：${
       detailData['heatstroke']
     }\nビール：${detailData['beer']}`;
-    this._informSlackService.informMessage(informMessage);
+    await this._informSlackService.informMessage(informMessage);
   }
 }

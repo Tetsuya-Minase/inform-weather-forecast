@@ -16,6 +16,7 @@ export class ScrapingServiceImpl implements ScrapingService {
 
   public async fetchDomData(url: string): Promise<JSDOM> {
     const response: RequestResponse = await this.request.get(url).catch(e => {
+      console.error('service error:', e);
       throw e;
     });
     return new JSDOM(response['body']);
