@@ -60,7 +60,7 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
       pictDataList,
       temperatureDataList
     );
-    const informMessage = `${detailData['date']}の天気\n天気：${
+    const informMessage = `<!channel> ${detailData['date']}の天気\n天気：${
       detailData['weather']
     }\n最高気温：${detailData['maxTemperature']}/最低気温：${
       detailData['minTemperature']
