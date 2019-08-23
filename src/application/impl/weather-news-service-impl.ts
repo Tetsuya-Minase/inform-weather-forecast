@@ -42,19 +42,6 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
     const temperatureDataList: Array<
       Array<string>
     > = this._converterService.domDataFormatter(temperatureList);
-    const timeList = domData.window.document.querySelectorAll('.time');
-    const timeDataList: Array<
-      Array<string>
-    > = this._converterService.domDataFormatter(timeList);
-    const precipList = domData.window.document.querySelectorAll('.precip');
-    const precipDataList: Array<
-      Array<string>
-    > = this._converterService.domDataFormatter(precipList);
-    const indexData = this._converterService.list2FullInformation(
-      indexDataList,
-      pictDataList,
-      temperatureDataList
-    );
     const detailData = this._converterService.list2TodayDetailInformation(
       indexDataList,
       pictDataList,
