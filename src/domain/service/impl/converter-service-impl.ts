@@ -1,5 +1,5 @@
-import { ConverterService } from '../converter-service';
-import { injectable } from 'inversify';
+import { ConverterService } from "../converter-service";
+import { injectable } from "inversify";
 import {
   DATE,
   DetailInformation,
@@ -7,11 +7,13 @@ import {
   INDEX,
   TEMPERATURE,
   WeatherDate
-} from '../../model/weather-forecast-model';
+} from "../../model/weather-forecast-model";
 
 @injectable()
 export class ConverterServiceImpl implements ConverterService {
-  public indexDomDataFormatter(domList: NodeListOf<Element>): Map<INDEX, string> {
+  public indexDomDataFormatter(
+    domList: NodeListOf<Element>
+  ): Map<INDEX, string> {
     const resultMap = new Map<INDEX, string>();
     domList.forEach(dom => {
       if (dom.textContent === null) {
@@ -27,7 +29,10 @@ export class ConverterServiceImpl implements ConverterService {
     return resultMap;
   }
 
-  public weatherDomDataFormatter(weatherDomList: NodeListOf<Element>, dateDomList: NodeListOf<Element>): Map<DATE, WeatherDate> {
+  public weatherDomDataFormatter(
+    weatherDomList: NodeListOf<Element>,
+    dateDomList: NodeListOf<Element>
+  ): Map<DATE, WeatherDate> {
     const resultMap = new Map<DATE, WeatherDate>();
     const weatherList: string[] = [];
     const dateList: string[] = [];
@@ -56,7 +61,9 @@ export class ConverterServiceImpl implements ConverterService {
     return resultMap;
   }
 
-  public temperatureDomDataFormatter(domList: NodeListOf<Element>): Map<TEMPERATURE, string> {
+  public temperatureDomDataFormatter(
+    domList: NodeListOf<Element>
+  ): Map<TEMPERATURE, string> {
     const resultMap = new Map<TEMPERATURE, string>();
     const tempList: string[] = [];
     domList.forEach(dom => {
@@ -79,8 +86,8 @@ export class ConverterServiceImpl implements ConverterService {
     const weatherDate: WeatherDate | undefined = weatherDateMap.get(DATE.TODAY);
 
     return new DetailInformation(
-      weatherDate && weatherDate.date || undefined,
-      weatherDate && weatherDate.weather || undefined,
+      (weatherDate && weatherDate.date) || undefined,
+      (weatherDate && weatherDate.weather) || undefined,
       temperatureMap.get(TEMPERATURE.MAX),
       temperatureMap.get(TEMPERATURE.MIN),
       indexMap.get(INDEX.WASHING),
@@ -90,14 +97,14 @@ export class ConverterServiceImpl implements ConverterService {
       indexMap.get(INDEX.DRY),
       indexMap.get(INDEX.COLD),
       indexMap.get(INDEX.HEATSTROKE),
-      indexMap.get(INDEX.BEER),
+      indexMap.get(INDEX.BEER)
     );
   }
 
   private textSplitter(text: string): string[] {
     return text
-      .replace(/ /g, '')
-      .split('\n')
-      .filter(r => r !== '');
+      .replace(/ /g, "")
+      .split("\n")
+      .filter(r => r !== "");
   }
 }
