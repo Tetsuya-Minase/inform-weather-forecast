@@ -1,18 +1,15 @@
-import { WeatherNewsService } from '../application/weather-news-service';
-import { inject, injectable } from 'inversify';
-import { TYPES } from '../inversify.types';
+import { WeatherNewsService } from "../application/weather-news-service";
+import { inject, injectable } from "inversify";
+import { TYPES } from "../inversify.types";
 
 @injectable()
 export class WeatherNews {
-  private _weatherNewsService: WeatherNewsService;
-
   constructor(
-    @inject(TYPES.WeatherNewsService) weatherNewsService: WeatherNewsService
-  ) {
-    this._weatherNewsService = weatherNewsService;
-  }
+    @inject(TYPES.WeatherNewsService)
+    private readonly weatherNewsService: WeatherNewsService
+  ) {}
 
   public async informWeatherNews() {
-    await this._weatherNewsService.informTodayWeatherInfo();
+    await this.weatherNewsService.informTodayWeatherInfo();
   }
 }
