@@ -1,13 +1,13 @@
+import { DATE, DetailInformation, INDEX, TEMPERATURE, WeatherDate } from '../model/weather-forecast-model';
+
 export interface ConverterService {
-  domDataFormatter(domList);
-  list2FullInformation(
-    indexList: Array<Array<string>>,
-    pictDataList: Array<Array<string>>,
-    temperatureDataList: Array<Array<string>>
-  );
-  list2TodayDetailInformation(
-    list: Array<Array<string>>,
-    pictDataList: Array<Array<string>>,
-    temperatureDataList: Array<Array<string>>
-  );
+  indexDomDataFormatter(domList: NodeListOf<Element>): Map<INDEX, string>;
+  weatherDomDataFormatter(weatherDomList: NodeListOf<Element>, dateDomList: NodeListOf<Element>): Map<DATE, WeatherDate>;
+  temperatureDomDataFormatter(domList: NodeListOf<Element>): Map<TEMPERATURE, string>;
+
+  toDetailInformation(
+    indexMap: Map<INDEX, string>,
+    weatherDateMap: Map<DATE, WeatherDate>,
+    temperatureMap: Map<TEMPERATURE, string>
+  ): DetailInformation;
 }
