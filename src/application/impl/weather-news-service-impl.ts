@@ -1,61 +1,69 @@
-import { ScrapingService } from '../../domain/service/scraping-service';
-import { ConverterService } from '../../domain/service/converter-service';
-import { WeatherNewsService } from '../weather-news-service';
-import { InformSlackService } from '../../domain/service/inform-slack-service';
-import { injectable, inject } from 'inversify';
-import { TYPES } from '../../inversify.types';
-import { WEATHER_FORECAST_AT_TOKYO } from '../../config/constant';
-import 'reflect-metadata';
+import { ScrapingService } from "../../domain/service/scraping-service";
+import { ConverterService } from "../../domain/service/converter-service";
+import { WeatherNewsService } from "../weather-news-service";
+import { InformSlackService } from "../../domain/service/inform-slack-service";
+import { injectable, inject } from "inversify";
+import { TYPES } from "../../inversify.types";
+import { WEATHER_FORECAST_AT_TOKYO } from "../../config/constant";
+import "reflect-metadata";
+import {
+  DATE,
+  INDEX,
+  TEMPERATURE,
+  WeatherDate
+} from "../../domain/model/weather-forecast-model";
 
 @injectable()
 export class WeatherNewsServiceImpl implements WeatherNewsService {
-  private _scrapingService: ScrapingService;
-  private _converterService: ConverterService;
-  private _informSlackService: InformSlackService;
   private weatherNewsUrl = WEATHER_FORECAST_AT_TOKYO;
 
   constructor(
-    @inject(TYPES.ScrapingService) scrapingService: ScrapingService,
-    @inject(TYPES.ConverterService) converterService: ConverterService,
-    @inject(TYPES.InformSlackService) informSlackService: InformSlackService
-  ) {
-    this._scrapingService = scrapingService;
-    this._converterService = converterService;
-    this._informSlackService = informSlackService;
-  }
+    @inject(TYPES.ScrapingService)
+    private readonly scrapingService: ScrapingService,
+    @inject(TYPES.ConverterService)
+    private readonly converterService: ConverterService,
+    @inject(TYPES.InformSlackService)
+    private readonly informSlackService: InformSlackService
+  ) {}
 
   public async informTodayWeatherInfo() {
-    const domData = await this._scrapingService.fetchDomData(
+    const domData = await this.scrapingService.fetchDomData(
       this.weatherNewsUrl
     );
-    const indexList = domData.window.document.querySelectorAll(
-      '.indexList_item'
+    // 指標取得
+    const indexList: NodeListOf<
+      Element
+    > = domData.window.document.querySelectorAll(".indexList_item");
+    const indexMap: Map<
+      INDEX,
+      string
+    > = this.converterService.indexDomDataFormatter(indexList);
+    // 天気取得
+    const weatherList: NodeListOf<
+      Element
+    > = domData.window.document.querySelectorAll(".pict");
+    // 日付取得
+    const dateList: NodeListOf<
+      Element
+    > = domData.window.document.querySelectorAll(".tabView_item");
+    const weatherDateMap: Map<
+      DATE,
+      WeatherDate
+    > = this.converterService.weatherDomDataFormatter(weatherList, dateList);
+    // 気温取得
+    const temperatureList: NodeListOf<
+      Element
+    > = domData.window.document.querySelectorAll(".temp");
+    const temperatureMap: Map<
+      TEMPERATURE,
+      string
+    > = this.converterService.temperatureDomDataFormatter(temperatureList);
+
+    const detailData = this.converterService.toDetailInformation(
+      indexMap,
+      weatherDateMap,
+      temperatureMap
     );
-    const indexDataList: Array<
-      Array<string>
-    > = this._converterService.domDataFormatter(indexList);
-    const pictList = domData.window.document.querySelectorAll('.pict');
-    const pictDataList: Array<
-      Array<string>
-    > = this._converterService.domDataFormatter(pictList);
-    const temperatureList = domData.window.document.querySelectorAll('.temp');
-    const temperatureDataList: Array<
-      Array<string>
-    > = this._converterService.domDataFormatter(temperatureList);
-    const detailData = this._converterService.list2TodayDetailInformation(
-      indexDataList,
-      pictDataList,
-      temperatureDataList
-    );
-    const informMessage = `<!channel> ${detailData['date']}の天気\n天気：${
-      detailData['weather']
-    }\n最高気温：${detailData['maxTemperature']}/最低気温：${
-      detailData['minTemperature']
-    }\n洗濯：${detailData['washing']}\n傘：${detailData['umbrella']}\n紫外線：${
-      detailData['uvLight']
-    }\n重ね着：${detailData['layering']}\n熱中症：${
-      detailData['heatstroke']
-    }\nビール：${detailData['beer']}`;
-    await this._informSlackService.informMessage(informMessage);
+    await this.informSlackService.informMessage(detailData.toString());
   }
 }
