@@ -1,6 +1,6 @@
-import { WeatherNewsService } from "../application/weather-news-service";
-import { inject, injectable } from "inversify";
-import { TYPES } from "../inversify.types";
+import { WeatherNewsService } from '../application/weather-news-service';
+import { inject, injectable } from 'inversify';
+import { TYPES } from '../inversify.types';
 
 @injectable()
 export class WeatherNews {

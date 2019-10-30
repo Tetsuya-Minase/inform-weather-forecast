@@ -1,9 +1,9 @@
-import { HttpRequest } from "../../../infrastructure/http-request";
-import { InformSlackService } from "../inform-slack-service";
-import { inject, injectable } from "inversify";
-import "reflect-metadata";
-import { TYPES } from "../../../inversify.types";
-import { RequestParams } from "../../model/request-types";
+import { HttpRequest } from '../../../infrastructure/http-request';
+import { InformSlackService } from '../inform-slack-service';
+import { inject, injectable } from 'inversify';
+import 'reflect-metadata';
+import { TYPES } from '../../../inversify.types';
+import { RequestParams } from '../../model/request-types';
 
 @injectable()
 export class InformSlackServiceImpl implements InformSlackService {
@@ -15,14 +15,14 @@ export class InformSlackServiceImpl implements InformSlackService {
 
   public async informMessage(message: string) {
     const param: RequestParams = {
-      url: this.slackUrl || "",
+      url: this.slackUrl || '',
       data: {
-        channel: "#weather",
-        username: "webhookbot",
+        channel: '#weather',
+        username: 'webhookbot',
         text: message
       }
     };
-    console.info("request param:", param);
+    console.info('request param:', param);
     await this.httpRequest.post(param);
   }
 }

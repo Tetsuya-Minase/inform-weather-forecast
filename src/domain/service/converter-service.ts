@@ -4,7 +4,7 @@ import {
   INDEX,
   TEMPERATURE,
   WeatherDate
-} from "../model/weather-forecast-model";
+} from '../model/weather-forecast-model';
 
 export interface ConverterService {
   indexDomDataFormatter(domList: NodeListOf<Element>): Map<INDEX, string>;
