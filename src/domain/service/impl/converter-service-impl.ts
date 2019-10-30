@@ -1,112 +1,110 @@
-import { ConverterService } from '../converter-service';
-import { injectable } from 'inversify';
+import { ConverterService } from "../converter-service";
+import { injectable } from "inversify";
+import {
+  DATE,
+  DetailInformation,
+  getIndexFromText,
+  INDEX,
+  TEMPERATURE,
+  WeatherDate
+} from "../../model/weather-forecast-model";
 
 @injectable()
 export class ConverterServiceImpl implements ConverterService {
-  public domDataFormatter(domList) {
-    const returnList: Array<any> = [];
-    for (const dom of domList) {
-      const data = dom.textContent
-        .replace(/ /g, '')
-        .split('\n')
-        .filter(r => r !== '');
-      returnList.push(data);
-    }
-    return returnList;
+  public indexDomDataFormatter(
+    domList: NodeListOf<Element>
+  ): Map<INDEX, string> {
+    const resultMap = new Map<INDEX, string>();
+    domList.forEach(dom => {
+      if (dom.textContent === null) {
+        return;
+      }
+      const data = this.textSplitter(dom.textContent);
+      const indexKey = getIndexFromText(data[0]);
+      if (indexKey === undefined) {
+        return;
+      }
+      resultMap.set(indexKey, data[2]);
+    });
+    return resultMap;
   }
 
-  public list2FullInformation(
-    indexList: Array<Array<string>>,
-    pictDataList: Array<Array<string>>,
-    temperatureDataList: Array<Array<string>>
-  ) {
-    const indexDataList: Array<object> = [{}, {}];
-    // 天気設定
-    indexDataList[0]['weather'] = pictDataList[0][0];
-    indexDataList[1]['weather'] = pictDataList[1][0];
-    // 気温設定
-    indexDataList[0]['maxTemperature'] = temperatureDataList[0][0];
-    indexDataList[0]['minTemperature'] = temperatureDataList[0][1];
-    indexDataList[1]['maxTemperature'] = temperatureDataList[1][0];
-    indexDataList[1]['minTemperature'] = temperatureDataList[1][1];
-    // 指標設定
-    indexList.forEach(l => {
-      // 先頭がリストのラベルなので振り分け
-      switch (l[0]) {
-        case '日付':
-          indexDataList[0]['date'] = l[1];
-          indexDataList[1]['date'] = l[2];
-          break;
-        case '洗濯':
-          indexDataList[0]['washing'] = `${l[1]} ${l[2]}`;
-          indexDataList[1]['washing'] = `${l[3]} ${l[4]}`;
-          break;
-        case '傘':
-          indexDataList[0]['umbrella'] = `${l[1]} ${l[2]}`;
-          indexDataList[1]['umbrella'] = `${l[1]} ${l[2]}`;
-          break;
-        case '紫外線':
-          indexDataList[0]['uvLight'] = `${l[1]} ${l[2]}`;
-          indexDataList[1]['uvLight'] = `${l[1]} ${l[2]}`;
-          break;
-        case '重ね着':
-          indexDataList[0]['layering'] = `${l[1]} ${l[2]}`;
-          indexDataList[1]['layering'] = `${l[1]} ${l[2]}`;
-          break;
-        case '熱中症':
-          indexDataList[0]['heatstroke'] = `${l[1]} ${l[2]}`;
-          indexDataList[1]['heatstroke'] = `${l[1]} ${l[2]}`;
-          break;
-        case 'ビール':
-          indexDataList[0]['beer'] = `${l[1]} ${l[2]}`;
-          indexDataList[1]['beer'] = `${l[1]} ${l[2]}`;
-          break;
-        default:
-        // 一致しなければ何もしない
+  public weatherDomDataFormatter(
+    weatherDomList: NodeListOf<Element>,
+    dateDomList: NodeListOf<Element>
+  ): Map<DATE, WeatherDate> {
+    const resultMap = new Map<DATE, WeatherDate>();
+    const weatherList: string[] = [];
+    const dateList: string[] = [];
+    weatherDomList.forEach(dom => {
+      if (dom.textContent === null) {
+        return;
       }
+      const data = this.textSplitter(dom.textContent);
+      weatherList.push(...data);
     });
-    return indexDataList;
+    dateDomList.forEach(dom => {
+      if (dom.textContent === null) {
+        return;
+      }
+      const data = this.textSplitter(dom.textContent);
+      dateList.push(...data);
+    });
+    resultMap.set(DATE.TODAY, {
+      weather: weatherList[0],
+      date: dateList[0]
+    });
+    resultMap.set(DATE.TOMORROW, {
+      weather: weatherList[1],
+      date: dateList[1]
+    });
+    return resultMap;
   }
 
-  public list2TodayDetailInformation(
-    list: Array<Array<string>>,
-    pictDataList: Array<Array<string>>,
-    temperatureDataList: Array<Array<string>>
-  ) {
-    const indexData = {};
-    // 天気設定
-    indexData['weather'] = pictDataList[0][0];
-    // 気温設定
-    indexData['maxTemperature'] = temperatureDataList[0][0];
-    indexData['minTemperature'] = temperatureDataList[0][1];
-    list.forEach(l => {
-      // 先頭がリストのラベルなので振り分け
-      switch (l[0]) {
-        case '日付':
-          indexData['date'] = l[1];
-          break;
-        case '洗濯':
-          indexData['washing'] = l[2];
-          break;
-        case '傘':
-          indexData['umbrella'] = l[2];
-          break;
-        case '紫外線':
-          indexData['uvLight'] = l[2];
-          break;
-        case '重ね着':
-          indexData['layering'] = l[2];
-          break;
-        case '熱中症':
-          indexData['heatstroke'] = l[2];
-          break;
-        case 'ビール':
-          indexData['beer'] = l[2];
-          break;
-        default:
-        // 一致しなければ何もしない
+  public temperatureDomDataFormatter(
+    domList: NodeListOf<Element>
+  ): Map<TEMPERATURE, string> {
+    const resultMap = new Map<TEMPERATURE, string>();
+    const tempList: string[] = [];
+    domList.forEach(dom => {
+      if (dom.textContent === null) {
+        return;
       }
+      const data = this.textSplitter(dom.textContent);
+      tempList.push(...data);
     });
-    return indexData;
+    resultMap.set(TEMPERATURE.MAX, tempList[0]);
+    resultMap.set(TEMPERATURE.MIN, tempList[1]);
+    return resultMap;
+  }
+
+  public toDetailInformation(
+    indexMap: Map<INDEX, string>,
+    weatherDateMap: Map<DATE, WeatherDate>,
+    temperatureMap: Map<TEMPERATURE, string>
+  ): DetailInformation {
+    const weatherDate: WeatherDate | undefined = weatherDateMap.get(DATE.TODAY);
+
+    return new DetailInformation(
+      (weatherDate && weatherDate.date) || undefined,
+      (weatherDate && weatherDate.weather) || undefined,
+      temperatureMap.get(TEMPERATURE.MAX),
+      temperatureMap.get(TEMPERATURE.MIN),
+      indexMap.get(INDEX.WASHING),
+      indexMap.get(INDEX.UMBRELLA),
+      indexMap.get(INDEX.UV),
+      indexMap.get(INDEX.LAYERING),
+      indexMap.get(INDEX.DRY),
+      indexMap.get(INDEX.COLD),
+      indexMap.get(INDEX.HEATSTROKE),
+      indexMap.get(INDEX.BEER)
+    );
+  }
+
+  private textSplitter(text: string): string[] {
+    return text
+      .replace(/ /g, "")
+      .split("\n")
+      .filter(r => r !== "");
   }
 }
