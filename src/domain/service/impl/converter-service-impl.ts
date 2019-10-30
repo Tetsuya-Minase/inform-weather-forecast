@@ -1,5 +1,5 @@
-import { ConverterService } from "../converter-service";
-import { injectable } from "inversify";
+import { ConverterService } from '../converter-service';
+import { injectable } from 'inversify';
 import {
   DATE,
   DetailInformation,
@@ -7,7 +7,7 @@ import {
   INDEX,
   TEMPERATURE,
   WeatherDate
-} from "../../model/weather-forecast-model";
+} from '../../model/weather-forecast-model';
 
 @injectable()
 export class ConverterServiceImpl implements ConverterService {
@@ -21,7 +21,8 @@ export class ConverterServiceImpl implements ConverterService {
       }
       const data = this.textSplitter(dom.textContent);
       const indexKey = getIndexFromText(data[0]);
-      if (indexKey === undefined) {
+      // keyなし or すでにある場合は無視
+      if (indexKey === undefined || resultMap.has(indexKey)) {
         return;
       }
       resultMap.set(indexKey, data[2]);
@@ -103,8 +104,8 @@ export class ConverterServiceImpl implements ConverterService {
 
   private textSplitter(text: string): string[] {
     return text
-      .replace(/ /g, "")
-      .split("\n")
-      .filter(r => r !== "");
+      .replace(/ /g, '')
+      .split('\n')
+      .filter(r => r !== '');
   }
 }

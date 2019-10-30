@@ -1,17 +1,17 @@
-import { ScrapingService } from "../../domain/service/scraping-service";
-import { ConverterService } from "../../domain/service/converter-service";
-import { WeatherNewsService } from "../weather-news-service";
-import { InformSlackService } from "../../domain/service/inform-slack-service";
-import { injectable, inject } from "inversify";
-import { TYPES } from "../../inversify.types";
-import { WEATHER_FORECAST_AT_TOKYO } from "../../config/constant";
-import "reflect-metadata";
+import { ScrapingService } from '../../domain/service/scraping-service';
+import { ConverterService } from '../../domain/service/converter-service';
+import { WeatherNewsService } from '../weather-news-service';
+import { InformSlackService } from '../../domain/service/inform-slack-service';
+import { injectable, inject } from 'inversify';
+import { TYPES } from '../../inversify.types';
+import { WEATHER_FORECAST_AT_TOKYO } from '../../config/constant';
+import 'reflect-metadata';
 import {
   DATE,
   INDEX,
   TEMPERATURE,
   WeatherDate
-} from "../../domain/model/weather-forecast-model";
+} from '../../domain/model/weather-forecast-model';
 
 @injectable()
 export class WeatherNewsServiceImpl implements WeatherNewsService {
@@ -33,7 +33,7 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
     // 指標取得
     const indexList: NodeListOf<
       Element
-    > = domData.window.document.querySelectorAll(".indexList_item");
+    > = domData.window.document.querySelectorAll('.indexList_item');
     const indexMap: Map<
       INDEX,
       string
@@ -41,11 +41,11 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
     // 天気取得
     const weatherList: NodeListOf<
       Element
-    > = domData.window.document.querySelectorAll(".pict");
+    > = domData.window.document.querySelectorAll('.pict');
     // 日付取得
     const dateList: NodeListOf<
       Element
-    > = domData.window.document.querySelectorAll(".tabView_item");
+    > = domData.window.document.querySelectorAll('.tabView_item');
     const weatherDateMap: Map<
       DATE,
       WeatherDate
@@ -53,7 +53,7 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
     // 気温取得
     const temperatureList: NodeListOf<
       Element
-    > = domData.window.document.querySelectorAll(".temp");
+    > = domData.window.document.querySelectorAll('.temp');
     const temperatureMap: Map<
       TEMPERATURE,
       string
@@ -64,6 +64,6 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
       weatherDateMap,
       temperatureMap
     );
-    await this.informSlackService.informMessage(detailData.toString());
+    await this.informSlackService.informMessage(`<!channel>\n${detailData.toString()}`);
   }
 }
