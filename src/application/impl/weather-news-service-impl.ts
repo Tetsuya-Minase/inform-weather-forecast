@@ -64,6 +64,8 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
       weatherDateMap,
       temperatureMap
     );
-    await this.informSlackService.informMessage(`<!channel>\n${detailData.toString()}`);
+    await this.informSlackService.informMessage(
+      `<!channel>\n${detailData.toString()}`
+    );
   }
 }
