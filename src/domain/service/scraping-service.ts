@@ -1,4 +1,4 @@
-import { JSDOM } from "jsdom";
+import { JSDOM } from 'jsdom';
 
 export interface ScrapingService {
   fetchDomData(url: string): Promise<JSDOM>;

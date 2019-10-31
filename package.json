@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./dist/app.js",
     "start-local": "sls offline",
-    "formatter": "prettier 'src/**/*.ts' --write",
+    "fix:format": "prettier 'src/**/*.ts' --write",
     "lint:format": "prettier 'src/**/*.ts' -c",
     "test": "jest",
     "deploy": "sls deploy",
