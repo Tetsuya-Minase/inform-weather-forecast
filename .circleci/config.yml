@@ -34,8 +34,8 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-      - run: yarn config credentials --provider aws --key $SLS_KEY --secret $SLS_SEC
-      - run: yarn deploy --webhook=$SLS_HOOK
+      - run: yarn run config credentials --provider aws --key $SLS_KEY --secret $SLS_SEC
+      - run: yarn run deploy --webhook=$SLS_HOOK
 workflows:
   version: 2
   test_deploy: # workflow名
