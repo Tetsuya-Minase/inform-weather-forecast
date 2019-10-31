@@ -20,3 +20,31 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: yarn lint:format
       - run: yarn test
+  deploy:
+    docker:
+      - image: circleci/node:12.6
+    working_directoet: ~/repo
+    steps:
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            - v1-dependencies-
+      - run: yarn install
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+      - run: yarn config credentials --provider aws --key $SLS_KEY --secret $SLS_SEC
+      - run: yarn deploy --webhook=$SLS_HOOK
+workflows:
+  version: 2
+  test_deploy: # workflow名
+    jobs:
+      - build
+      - deploy:
+          requires: # buildが成功したら
+            - build
+          filters:
+            branches: # masterブランチのみ実行する
+              only:
+                - master
