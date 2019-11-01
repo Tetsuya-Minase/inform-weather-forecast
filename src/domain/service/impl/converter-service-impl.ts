@@ -12,7 +12,8 @@ import {
 @injectable()
 export class ConverterServiceImpl implements ConverterService {
   public indexDomDataFormatter(
-    domList: NodeListOf<Element>
+    domList: NodeListOf<Element>,
+    date: DATE
   ): Map<INDEX, string> {
     const resultMap = new Map<INDEX, string>();
     domList.forEach(dom => {
@@ -21,8 +22,8 @@ export class ConverterServiceImpl implements ConverterService {
       }
       const data = this.textSplitter(dom.textContent);
       const indexKey = getIndexFromText(data[0]);
-      // keyなし or すでにある場合は無視
-      if (indexKey === undefined || resultMap.has(indexKey)) {
+      // keyなし or スキップ
+      if (indexKey === undefined || this.isSkip(date, indexKey, resultMap)) {
         return;
       }
       resultMap.set(indexKey, data[2]);
@@ -63,7 +64,8 @@ export class ConverterServiceImpl implements ConverterService {
   }
 
   public temperatureDomDataFormatter(
-    domList: NodeListOf<Element>
+    domList: NodeListOf<Element>,
+    date: DATE
   ): Map<TEMPERATURE, string> {
     const resultMap = new Map<TEMPERATURE, string>();
     const tempList: string[] = [];
@@ -74,17 +76,29 @@ export class ConverterServiceImpl implements ConverterService {
       const data = this.textSplitter(dom.textContent);
       tempList.push(...data);
     });
-    resultMap.set(TEMPERATURE.MAX, tempList[0]);
-    resultMap.set(TEMPERATURE.MIN, tempList[1]);
+
+    switch (date) {
+      case DATE.TODAY:
+        resultMap.set(TEMPERATURE.MAX, tempList[0]);
+        resultMap.set(TEMPERATURE.MIN, tempList[1]);
+        break;
+      case DATE.TOMORROW:
+        resultMap.set(TEMPERATURE.MAX, tempList[2]);
+        resultMap.set(TEMPERATURE.MIN, tempList[3]);
+        break;
+      default:
+      // 何もしない
+    }
     return resultMap;
   }
 
   public toDetailInformation(
     indexMap: Map<INDEX, string>,
     weatherDateMap: Map<DATE, WeatherDate>,
-    temperatureMap: Map<TEMPERATURE, string>
+    temperatureMap: Map<TEMPERATURE, string>,
+    date: DATE
   ): DetailInformation {
-    const weatherDate: WeatherDate | undefined = weatherDateMap.get(DATE.TODAY);
+    const weatherDate: WeatherDate | undefined = weatherDateMap.get(date);
 
     return new DetailInformation(
       (weatherDate && weatherDate.date) || undefined,
@@ -107,5 +121,16 @@ export class ConverterServiceImpl implements ConverterService {
       .replace(/ /g, '')
       .split('\n')
       .filter(r => r !== '');
+  }
+
+  /**
+   * 重複したときスキップするかどうか
+   * @param date 取得対象が強化
+   * @param key マップkey
+   * @param map マップ
+   */
+  private isSkip(date: DATE, key: INDEX, map: Map<INDEX, string>): boolean {
+    // 取得対象が今日の時は重複スキップする
+    return date === DATE.TODAY && map.has(key);
   }
 }
