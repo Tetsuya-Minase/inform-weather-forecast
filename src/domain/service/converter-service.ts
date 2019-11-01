@@ -7,18 +7,23 @@ import {
 } from '../model/weather-forecast-model';
 
 export interface ConverterService {
-  indexDomDataFormatter(domList: NodeListOf<Element>): Map<INDEX, string>;
+  indexDomDataFormatter(
+    domList: NodeListOf<Element>,
+    date: DATE
+  ): Map<INDEX, string>;
   weatherDomDataFormatter(
     weatherDomList: NodeListOf<Element>,
     dateDomList: NodeListOf<Element>
   ): Map<DATE, WeatherDate>;
   temperatureDomDataFormatter(
-    domList: NodeListOf<Element>
+    domList: NodeListOf<Element>,
+    date: DATE
   ): Map<TEMPERATURE, string>;
 
   toDetailInformation(
     indexMap: Map<INDEX, string>,
     weatherDateMap: Map<DATE, WeatherDate>,
-    temperatureMap: Map<TEMPERATURE, string>
+    temperatureMap: Map<TEMPERATURE, string>,
+    date: DATE
   ): DetailInformation;
 }

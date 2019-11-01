@@ -26,7 +26,7 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
     private readonly informSlackService: InformSlackService
   ) {}
 
-  public async informTodayWeatherInfo() {
+  public async informTodayWeatherInfo(): Promise<void> {
     const domData = await this.scrapingService.fetchDomData(
       this.weatherNewsUrl
     );
@@ -37,7 +37,7 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
     const indexMap: Map<
       INDEX,
       string
-    > = this.converterService.indexDomDataFormatter(indexList);
+    > = this.converterService.indexDomDataFormatter(indexList, DATE.TODAY);
     // 天気取得
     const weatherList: NodeListOf<
       Element
@@ -57,13 +57,65 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
     const temperatureMap: Map<
       TEMPERATURE,
       string
-    > = this.converterService.temperatureDomDataFormatter(temperatureList);
+    > = this.converterService.temperatureDomDataFormatter(
+      temperatureList,
+      DATE.TODAY
+    );
 
     const detailData = this.converterService.toDetailInformation(
       indexMap,
       weatherDateMap,
-      temperatureMap
+      temperatureMap,
+      DATE.TODAY
     );
+    await this.informSlackService.informMessage(
+      `<!channel>\n${detailData.toString()}`
+    );
+  }
+
+  public async informTomorrowWeatherInfo(): Promise<void> {
+    const domData = await this.scrapingService.fetchDomData(
+      this.weatherNewsUrl
+    );
+    // 指標取得
+    const indexList: NodeListOf<
+      Element
+    > = domData.window.document.querySelectorAll('.indexList_item');
+    const indexMap: Map<
+      INDEX,
+      string
+    > = this.converterService.indexDomDataFormatter(indexList, DATE.TOMORROW);
+    // 天気取得
+    const weatherList: NodeListOf<
+      Element
+    > = domData.window.document.querySelectorAll('.pict');
+    // 日付取得
+    const dateList: NodeListOf<
+      Element
+    > = domData.window.document.querySelectorAll('.tabView_item');
+    const weatherDateMap: Map<
+      DATE,
+      WeatherDate
+    > = this.converterService.weatherDomDataFormatter(weatherList, dateList);
+    // 気温取得
+    const temperatureList: NodeListOf<
+      Element
+    > = domData.window.document.querySelectorAll('.temp');
+    const temperatureMap: Map<
+      TEMPERATURE,
+      string
+    > = this.converterService.temperatureDomDataFormatter(
+      temperatureList,
+      DATE.TOMORROW
+    );
+
+    const detailData = this.converterService.toDetailInformation(
+      indexMap,
+      weatherDateMap,
+      temperatureMap,
+      DATE.TOMORROW
+    );
+    console.log('detail tomorrow: ', detailData.toString());
     await this.informSlackService.informMessage(
       `<!channel>\n${detailData.toString()}`
     );
