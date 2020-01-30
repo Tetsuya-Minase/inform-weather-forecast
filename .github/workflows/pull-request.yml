@@ -1,0 +1,26 @@
+name: inform-weather-confirm-flow
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: setup
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+
+      - name: install and setup config
+        run: npm install
+
+      - name: lint
+        run: npm run lint:format
+
+      - name: test
+        run: npm test
