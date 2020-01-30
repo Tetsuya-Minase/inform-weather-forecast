@@ -19,7 +19,7 @@ jobs:
       - name: install and setup config
         run: |
           npm install
-          npm run config -- "credentials --provider aws --key ${{config.SLS_KEY}} --secret ${{config.SLS_SEC}}"
+          npm run config -- "credentials --provider aws --key ${{secrets.SLS_KEY}} --secret ${{secrets.SLS_SEC}}"
 
       - name: deploy
-        run: npm run deploy -- --webhook=${{config.SLS_HOOK}}
+        run: npm run deploy -- --webhook=${{secrets.SLS_HOOK}}
