@@ -11,11 +11,7 @@ export type RequestParams = {
   };
 };
 export class ResponseError extends Error {
-  constructor(
-    private status: number,
-    private error: any,
-    public message: string
-  ) {
+  constructor(private status: number, private error: any, public message: string) {
     super(message);
   }
 }

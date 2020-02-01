@@ -9,9 +9,7 @@ import { RequestParams } from '../../model/request-types';
 export class InformSlackServiceImpl implements InformSlackService {
   private slackUrl = process.env.WEBHOOK;
 
-  constructor(
-    @inject(TYPES.HttpRequest) private readonly httpRequest: HttpRequest
-  ) {}
+  constructor(@inject(TYPES.HttpRequest) private readonly httpRequest: HttpRequest) {}
 
   public async informMessage(message: string) {
     const param: RequestParams = {

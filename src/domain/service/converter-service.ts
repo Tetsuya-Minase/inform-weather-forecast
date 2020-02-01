@@ -1,24 +1,12 @@
-import {
-  DATE,
-  DetailInformation,
-  INDEX,
-  TEMPERATURE,
-  WeatherDate
-} from '../model/weather-forecast-model';
+import { DATE, DetailInformation, INDEX, TEMPERATURE, WeatherDate } from '../model/weather-forecast-model';
 
 export interface ConverterService {
-  indexDomDataFormatter(
-    domList: NodeListOf<Element>,
-    date: DATE
-  ): Map<INDEX, string>;
+  indexDomDataFormatter(domList: NodeListOf<Element>, date: DATE): Map<INDEX, string>;
   weatherDomDataFormatter(
     weatherDomList: NodeListOf<Element>,
     dateDomList: NodeListOf<Element>
   ): Map<DATE, WeatherDate>;
-  temperatureDomDataFormatter(
-    domList: NodeListOf<Element>,
-    date: DATE
-  ): Map<TEMPERATURE, string>;
+  temperatureDomDataFormatter(domList: NodeListOf<Element>, date: DATE): Map<TEMPERATURE, string>;
 
   toDetailInformation(
     indexMap: Map<INDEX, string>,
