@@ -61,8 +61,7 @@ export class DetailInformation {
     private readonly cold: string | undefined,
     private readonly heatstroke: string | undefined,
     private readonly beer: string | undefined
-  ) {
-  }
+  ) {}
 
   public toString(): string {
     if (this.heatstroke && this.beer) {

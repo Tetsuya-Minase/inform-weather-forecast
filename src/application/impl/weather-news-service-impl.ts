@@ -10,7 +10,6 @@ import { DATE, INDEX, TEMPERATURE, WeatherDate } from '../../domain/model/weathe
 
 @injectable()
 export class WeatherNewsServiceImpl implements WeatherNewsService {
-
   constructor(
     @inject(TYPES.ScrapingService)
     private readonly scrapingService: ScrapingService,
