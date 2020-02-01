@@ -4,7 +4,6 @@ module.exports = {
         'es6': true,
     },
     'extends': [
-        //'google',
         'prettier',
         'plugin:prettier/recommended'
     ],

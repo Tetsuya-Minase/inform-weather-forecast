@@ -11,10 +11,7 @@ import {
 
 @injectable()
 export class ConverterServiceImpl implements ConverterService {
-  public indexDomDataFormatter(
-    domList: NodeListOf<Element>,
-    date: DATE
-  ): Map<INDEX, string> {
+  public indexDomDataFormatter(domList: NodeListOf<Element>, date: DATE): Map<INDEX, string> {
     const resultMap = new Map<INDEX, string>();
     domList.forEach(dom => {
       if (dom.textContent === null) {
@@ -63,10 +60,7 @@ export class ConverterServiceImpl implements ConverterService {
     return resultMap;
   }
 
-  public temperatureDomDataFormatter(
-    domList: NodeListOf<Element>,
-    date: DATE
-  ): Map<TEMPERATURE, string> {
+  public temperatureDomDataFormatter(domList: NodeListOf<Element>, date: DATE): Map<TEMPERATURE, string> {
     const resultMap = new Map<TEMPERATURE, string>();
     const tempList: string[] = [];
     domList.forEach(dom => {
