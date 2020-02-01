@@ -64,10 +64,6 @@ export class DetailInformation {
   ) {}
 
   public toString(): string {
-    console.log(`heatstroke: ${this.heatstroke}`);
-    console.log(`beer: ${this.beer}`);
-    console.log(`dry: ${this.dry}`);
-    console.log(`cold: ${this.cold}`);
     if (this.heatstroke && this.beer) {
       return `${this.date}の天気\n天気：${this.weather}\n最高気温：${this.maxTemperature}/最低気温：${this.minTemperature}\n洗濯：${this.washing}\n傘：${this.umbrella}\n紫外線：${this.uv}\n重ね着：${this.layering}\n熱中症：${this.heatstroke}\nビール：${this.beer}`;
     }
