@@ -1,8 +1,4 @@
-import {
-  ResponseSuccess,
-  RequestParams,
-  ResponseError
-} from '../../domain/model/request-types';
+import { ResponseSuccess, RequestParams, ResponseError } from '../../domain/model/request-types';
 import { HttpRequest } from '../http-request';
 import { injectable } from 'inversify';
 import axios from 'axios';
@@ -15,11 +11,7 @@ export class HttpRequestImpl implements HttpRequest {
     const response = await axios.get<string>(url);
     if (response.status !== 200) {
       console.error('get error: ', response.data);
-      throw new ResponseError(
-        response.status,
-        response.data,
-        response.statusText
-      );
+      throw new ResponseError(response.status, response.data, response.statusText);
     }
     return {
       status: response.status,
@@ -37,11 +29,7 @@ export class HttpRequestImpl implements HttpRequest {
     });
     if (response.status !== 200) {
       console.error('post error:', response.data);
-      throw new ResponseError(
-        response.status,
-        response.data,
-        response.statusText
-      );
+      throw new ResponseError(response.status, response.data, response.statusText);
     }
     return {
       status: response.status,
