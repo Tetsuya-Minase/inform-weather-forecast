@@ -21,7 +21,7 @@ jobs:
           npm install
 
       - name: deploy
-        run: npm run deploy -- token "${{secrets.FIREBASE_TOKEN}}"
+        run: npm run deploy -- --token "${{secrets.FIREBASE_TOKEN}}"
 
       - name: slack-notice-failure
         if: failure()
