@@ -19,10 +19,10 @@ jobs:
       - name: install and setup config
         run: |
           npm install
-          npm run config -- credentials --provider aws --key ${{secrets.SLS_KEY}} --secret ${{secrets.SLS_SEC}}
+          npm run config -- slack.url=${{secrets.SLACK_HOOK}}
 
       - name: deploy
-        run: npm run deploy -- --webhook=${{secrets.SLS_HOOK}}
+        run: npm run deploy -- token "${secrets.FIREBASE_TOKEN}"
 
       - name: slack-notice-failure
         if: failure()
@@ -33,7 +33,7 @@ jobs:
           SLACK_MESSAGE: 'deploy failure. :umbrella_with_rain_drops:'
           SLACK_TITLE: inform-weather-forcast
           SLACK_USERNAME: ci_bot
-          SLACK_WEBHOOK: ${{ secrets.SLS_HOOK }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_HOOK }}
 
       - name: slack-notice-success
         if: success()
@@ -44,4 +44,4 @@ jobs:
           SLACK_MESSAGE: 'deploy success. :sunny:'
           SLACK_TITLE: inform-weather-forcast
           SLACK_USERNAME: ci_bot
-          SLACK_WEBHOOK: ${{ secrets.SLS_HOOK }}
+          SLACK_WEBHOOK: ${{ secrets.SLACK_HOOK }}

@@ -1,9 +1,8 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
-
 module.exports = {
-  mode: 'production',
-  entry: path.join(__dirname, '/app.ts'),
+  mode: 'development',
+  entry: path.join(__dirname, '/index.ts'),
   target: 'node',
   module: {
     rules: [
@@ -28,7 +27,7 @@ module.exports = {
   output: {
     libraryTarget: 'this',
     path: path.join(__dirname, 'dist'),
-    filename: 'app.js'
+    filename: 'index.js'
   },
   externals: [nodeExternals()]
 };
