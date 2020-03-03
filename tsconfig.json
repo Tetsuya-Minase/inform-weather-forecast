@@ -10,10 +10,10 @@
     "esModuleInterop": true,
     "types": ["node", "reflect-metadata", "jest"],
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
+    "emitDecoratorMetadata": true
   },
   "exclude": [
-    "node_module",
+    "node_modules",
     "**/*.test.ts"
   ]
 }
