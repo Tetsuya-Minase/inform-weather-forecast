@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/app.js",
   "scripts": {
-    "build": "webpack --config webpack.config.firebase.js",
+    "build": "webpack --config webpack.config.js",
     "start": "node ./dist/app.js",
     "start-local": "sls offline",
     "fix:format": "prettier 'src/**/*.ts' --write",
