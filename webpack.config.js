@@ -1,37 +1,34 @@
-// output.pathに絶対パスを指定する必要があるため、pathモジュールを読み込んでおく
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
-const slsw = require('serverless-webpack');
 
 module.exports = {
-  mode: slsw.lib.webpack.isLocal ? 'development' : 'production',
-  entry: slsw.lib.entries,
-  devtool: 'source-map',
+  mode: 'production',
+  entry: path.join(__dirname, '/app.ts'),
   target: 'node',
   module: {
     rules: [
       {
         test: /\.ts$/,
         use: [
-          {
-            loader: 'ts-loader'
-          },
-          {
-            loader: 'eslint-loader'
-          }
+          {loader: 'ts-loader'},
+          {loader: 'eslint-loader'}
         ],
         exclude: /node_modules/
+      },
+      {
+        test: /\.node$/,
+        use: 'node-loader'
       }
     ]
   },
   resolve: {
     extensions: ['.js', '.json', '.ts'],
-    modules: ['node_modules']
+    modules: [path.join(__dirname, 'src'), 'node_modules']
   },
   output: {
-    libraryTarget: 'commonjs',
-    path: path.join(__dirname, '.webpack'),
-    filename: '[name].js',
+    libraryTarget: 'this',
+    path: path.join(__dirname, 'dist'),
+    filename: 'app.js'
   },
   externals: [nodeExternals()]
 };
