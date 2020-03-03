@@ -19,7 +19,6 @@ jobs:
       - name: install and setup config
         run: |
           npm install
-          npm run config -- slack.url=${{secrets.SLACK_HOOK}}
 
       - name: deploy
         run: npm run deploy -- token "${secrets.FIREBASE_TOKEN}"
