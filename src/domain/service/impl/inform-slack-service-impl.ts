@@ -20,8 +20,8 @@ export class InformSlackServiceImpl implements InformSlackService {
       data: {
         channel: '#weather',
         username: 'webhookbot',
-        text: message
-      }
+        text: message,
+      },
     };
     console.info('request param:', param);
     await this.httpRequest.post(param);

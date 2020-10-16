@@ -9,14 +9,14 @@ export const weatherForecastToday = functions
   .region('asia-northeast1')
   .pubsub.schedule('every day 07:30')
   .timeZone('Asia/Tokyo')
-  .onRun(async context => {
+  .onRun(async (context) => {
     try {
       console.log('start');
       await container.get<WeatherNews>(TYPES.WeatherNews).informWeatherNews(DATE.TODAY);
       console.log('end');
       return {
         statusCode: 204,
-        body: ''
+        body: '',
       };
     } catch (e) {
       console.log('error end:', e);
@@ -25,11 +25,11 @@ export const weatherForecastToday = functions
         body: JSON.stringify(
           {
             error: e,
-            input: event
+            input: event,
           },
           null,
           2
-        )
+        ),
       };
     }
   });
@@ -38,14 +38,14 @@ export const weatherForecastTomorrow = functions
   .region('asia-northeast1')
   .pubsub.schedule('every day 21:30')
   .timeZone('Asia/Tokyo')
-  .onRun(async context => {
+  .onRun(async (context) => {
     try {
       console.log('start');
       await container.get<WeatherNews>(TYPES.WeatherNews).informWeatherNews(DATE.TOMORROW);
       console.log('end');
       return {
         statusCode: 204,
-        body: ''
+        body: '',
       };
     } catch (e) {
       console.log('error end:', e);
@@ -54,11 +54,11 @@ export const weatherForecastTomorrow = functions
         body: JSON.stringify(
           {
             error: e,
-            input: event
+            input: event,
           },
           null,
           2
-        )
+        ),
       };
     }
   });

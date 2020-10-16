@@ -6,14 +6,14 @@ import {
   getIndexFromText,
   INDEX,
   TEMPERATURE,
-  WeatherDate
+  WeatherDate,
 } from '../../model/weather-forecast-model';
 
 @injectable()
 export class ConverterServiceImpl implements ConverterService {
   public indexDomDataFormatter(domList: NodeListOf<Element>, date: DATE): Map<INDEX, string> {
     const resultMap = new Map<INDEX, string>();
-    domList.forEach(dom => {
+    domList.forEach((dom) => {
       if (dom.textContent === null) {
         return;
       }
@@ -35,14 +35,14 @@ export class ConverterServiceImpl implements ConverterService {
     const resultMap = new Map<DATE, WeatherDate>();
     const weatherList: string[] = [];
     const dateList: string[] = [];
-    weatherDomList.forEach(dom => {
+    weatherDomList.forEach((dom) => {
       if (dom.textContent === null) {
         return;
       }
       const data = this.textSplitter(dom.textContent);
       weatherList.push(...data);
     });
-    dateDomList.forEach(dom => {
+    dateDomList.forEach((dom) => {
       if (dom.textContent === null) {
         return;
       }
@@ -51,11 +51,11 @@ export class ConverterServiceImpl implements ConverterService {
     });
     resultMap.set(DATE.TODAY, {
       weather: weatherList[0],
-      date: dateList[0]
+      date: dateList[0],
     });
     resultMap.set(DATE.TOMORROW, {
       weather: weatherList[1],
-      date: dateList[1]
+      date: dateList[1],
     });
     return resultMap;
   }
@@ -63,7 +63,7 @@ export class ConverterServiceImpl implements ConverterService {
   public temperatureDomDataFormatter(domList: NodeListOf<Element>, date: DATE): Map<TEMPERATURE, string> {
     const resultMap = new Map<TEMPERATURE, string>();
     const tempList: string[] = [];
-    domList.forEach(dom => {
+    domList.forEach((dom) => {
       if (dom.textContent === null) {
         return;
       }
@@ -114,7 +114,7 @@ export class ConverterServiceImpl implements ConverterService {
     return text
       .replace(/ /g, '')
       .split('\n')
-      .filter(r => r !== '');
+      .filter((r) => r !== '');
   }
 
   /**

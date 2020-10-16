@@ -1,6 +1,6 @@
 export enum DATE {
   TODAY = '今日',
-  TOMORROW = '明日'
+  TOMORROW = '明日',
 }
 
 export enum INDEX {
@@ -11,12 +11,12 @@ export enum INDEX {
   DRY = '乾燥',
   COLD = '風邪注意',
   HEATSTROKE = '熱中症',
-  BEER = 'ビール'
+  BEER = 'ビール',
 }
 
 export enum TEMPERATURE {
   MAX = '最高気温',
-  MIN = '最低気温'
+  MIN = '最低気温',
 }
 
 export const getIndexFromText = (text: string): INDEX | undefined => {
