@@ -2,7 +2,7 @@ import { ConverterService } from '../converter-service';
 import { injectable } from 'inversify';
 import {
   DATE,
-  DetailInformation,
+  detailInformationToString,
   getIndexFromText,
   INDEX,
   TEMPERATURE,
@@ -91,23 +91,22 @@ export class ConverterServiceImpl implements ConverterService {
     weatherDateMap: Map<DATE, WeatherDate>,
     temperatureMap: Map<TEMPERATURE, string>,
     date: DATE
-  ): DetailInformation {
+  ): string {
     const weatherDate: WeatherDate | undefined = weatherDateMap.get(date);
-
-    return new DetailInformation(
-      (weatherDate && weatherDate.date) || undefined,
-      (weatherDate && weatherDate.weather) || undefined,
-      temperatureMap.get(TEMPERATURE.MAX),
-      temperatureMap.get(TEMPERATURE.MIN),
-      indexMap.get(INDEX.WASHING),
-      indexMap.get(INDEX.UMBRELLA),
-      indexMap.get(INDEX.UV),
-      indexMap.get(INDEX.LAYERING),
-      indexMap.get(INDEX.DRY),
-      indexMap.get(INDEX.COLD),
-      indexMap.get(INDEX.HEATSTROKE),
-      indexMap.get(INDEX.BEER)
-    );
+    return detailInformationToString({
+      date: weatherDate?.date,
+      weather: weatherDate?.weather,
+      maxTemperature: temperatureMap.get(TEMPERATURE.MAX),
+      minTemperature: temperatureMap.get(TEMPERATURE.MIN),
+      washing: indexMap.get(INDEX.WASHING),
+      umbrella: indexMap.get(INDEX.UMBRELLA),
+      uv: indexMap.get(INDEX.UV),
+      layering: indexMap.get(INDEX.LAYERING),
+      dry: indexMap.get(INDEX.DRY),
+      cold: indexMap.get(INDEX.COLD),
+      heatstroke: indexMap.get(INDEX.HEATSTROKE),
+      beer: indexMap.get(INDEX.BEER),
+    });
   }
 
   private textSplitter(text: string): string[] {
