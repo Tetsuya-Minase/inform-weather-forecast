@@ -5,7 +5,7 @@ import axios from 'axios';
 
 @injectable()
 export class HttpRequestImpl implements HttpRequest {
-  private header = { 'Content-Type': 'application/json' };
+  private readonly header = { 'Content-Type': 'application/json' };
 
   public async get(url: string): Promise<ResponseSuccess> {
     const response = await axios.get<string>(url);
