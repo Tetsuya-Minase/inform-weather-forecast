@@ -5,7 +5,7 @@ import axios from 'axios';
 
 @injectable()
 export class HttpRequestImpl implements HttpRequest {
-  private header = { 'Content-Type': 'application/json' };
+  private readonly header = { 'Content-Type': 'application/json' };
 
   public async get(url: string): Promise<ResponseSuccess> {
     const response = await axios.get<string>(url);
@@ -15,7 +15,7 @@ export class HttpRequestImpl implements HttpRequest {
     }
     return {
       status: response.status,
-      data: response.data
+      data: response.data,
     };
   }
 
@@ -25,7 +25,7 @@ export class HttpRequestImpl implements HttpRequest {
     }
 
     const response = await axios.post(param.url, param.data, {
-      headers: this.header
+      headers: this.header,
     });
     if (response.status !== 200) {
       console.error('post error:', response.data);
@@ -33,7 +33,7 @@ export class HttpRequestImpl implements HttpRequest {
     }
     return {
       status: response.status,
-      data: response.data
+      data: response.data,
     };
   }
 }

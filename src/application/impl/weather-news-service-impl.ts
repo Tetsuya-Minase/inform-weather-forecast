@@ -37,7 +37,7 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
     );
 
     const detailData = this.converterService.toDetailInformation(indexMap, weatherDateMap, temperatureMap, DATE.TODAY);
-    await this.informSlackService.informMessage(`<!channel>\n${detailData.toString()}`);
+    await this.informSlackService.informMessage(`<!channel>\n${detailData}`);
   }
 
   public async informTomorrowWeatherInfo(): Promise<void> {
