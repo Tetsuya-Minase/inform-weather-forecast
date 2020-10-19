@@ -81,7 +81,9 @@ export class ConverterServiceImpl implements ConverterService {
         resultMap.set(TEMPERATURE.MIN, tempList[3]);
         break;
       default:
-      // 何もしない
+        // ログだけ吐いて何もしない
+        const _date: never = date;
+        console.error(`date(${_date}) is invalid.`);
     }
     return resultMap;
   }
@@ -109,6 +111,12 @@ export class ConverterServiceImpl implements ConverterService {
     });
   }
 
+  /**
+   * テキストを改行毎に分割する
+   * @param text 分割したいテキスト
+   * @returns 分割したテキスト
+   * @private
+   */
   private textSplitter(text: string): string[] {
     return text
       .replace(/ /g, '')
@@ -121,6 +129,7 @@ export class ConverterServiceImpl implements ConverterService {
    * @param date 取得対象が強化
    * @param key マップkey
    * @param map マップ
+   * @private
    */
   private isSkip(date: DATE, key: INDEX, map: Map<INDEX, string>): boolean {
     // 取得対象が今日の時は重複スキップする
