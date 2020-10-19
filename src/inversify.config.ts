@@ -13,29 +13,11 @@ import { HttpRequestImpl } from './infrastructure/impl/http-request-impl';
 import { WeatherNews } from './interface/weather-news';
 
 const container = new Container();
-container
-  .bind<WeatherNewsService>(TYPES.WeatherNewsService)
-  .to(WeatherNewsServiceImpl)
-  .inSingletonScope();
-container
-  .bind<ConverterService>(TYPES.ConverterService)
-  .to(ConverterServiceImpl)
-  .inSingletonScope();
-container
-  .bind<InformSlackService>(TYPES.InformSlackService)
-  .to(InformSlackServiceImpl)
-  .inSingletonScope();
-container
-  .bind<ScrapingService>(TYPES.ScrapingService)
-  .to(ScrapingServiceImpl)
-  .inSingletonScope();
-container
-  .bind<HttpRequest>(TYPES.HttpRequest)
-  .to(HttpRequestImpl)
-  .inSingletonScope();
-container
-  .bind<WeatherNews>(TYPES.WeatherNews)
-  .to(WeatherNews)
-  .inSingletonScope();
+container.bind<WeatherNewsService>(TYPES.WeatherNewsService).to(WeatherNewsServiceImpl).inSingletonScope();
+container.bind<ConverterService>(TYPES.ConverterService).to(ConverterServiceImpl).inSingletonScope();
+container.bind<InformSlackService>(TYPES.InformSlackService).to(InformSlackServiceImpl).inSingletonScope();
+container.bind<ScrapingService>(TYPES.ScrapingService).to(ScrapingServiceImpl).inSingletonScope();
+container.bind<HttpRequest>(TYPES.HttpRequest).to(HttpRequestImpl).inSingletonScope();
+container.bind<WeatherNews>(TYPES.WeatherNews).to(WeatherNews).inSingletonScope();
 
 export { container };

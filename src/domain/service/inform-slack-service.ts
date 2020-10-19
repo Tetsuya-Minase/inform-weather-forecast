@@ -1,3 +1,7 @@
 export interface InformSlackService {
-  informMessage(message: string);
+  /**
+   * slackに通知する
+   * @param message slackに通知するメッセージ
+   */
+  informMessage(message: string): Promise<void>;
 }

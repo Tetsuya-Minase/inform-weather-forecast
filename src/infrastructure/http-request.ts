@@ -1,7 +1,15 @@
-import { ResponseSuccess } from '../domain/model/request-types';
+import { RequestParams, ResponseSuccess } from '../domain/model/request-types';
 
 export interface HttpRequest {
+  /**
+   * getリクエストを送る
+   * @param url リクエストを送るURL
+   */
   get(url: string): Promise<ResponseSuccess>;
 
-  post(param: any): Promise<ResponseSuccess>;
+  /**
+   * postリクエストを送る
+   * @param param リクエストを送るときのパラメータ
+   */
+  post(param: RequestParams): Promise<ResponseSuccess>;
 }

@@ -4,7 +4,7 @@ const TYPES = {
   InformSlackService: Symbol.for('InformSlackService'),
   ScrapingService: Symbol.for('ScrapingService'),
   HttpRequest: Symbol.for('HttpRequest'),
-  WeatherNews: Symbol.for('WeatherNews')
+  WeatherNews: Symbol.for('WeatherNews'),
 };
 
 export { TYPES };

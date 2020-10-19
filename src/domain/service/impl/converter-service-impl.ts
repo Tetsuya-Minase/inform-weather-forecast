@@ -2,18 +2,18 @@ import { ConverterService } from '../converter-service';
 import { injectable } from 'inversify';
 import {
   DATE,
-  DetailInformation,
+  detailInformationToString,
   getIndexFromText,
   INDEX,
   TEMPERATURE,
-  WeatherDate
+  WeatherDate,
 } from '../../model/weather-forecast-model';
 
 @injectable()
 export class ConverterServiceImpl implements ConverterService {
   public indexDomDataFormatter(domList: NodeListOf<Element>, date: DATE): Map<INDEX, string> {
     const resultMap = new Map<INDEX, string>();
-    domList.forEach(dom => {
+    domList.forEach((dom) => {
       if (dom.textContent === null) {
         return;
       }
@@ -35,14 +35,14 @@ export class ConverterServiceImpl implements ConverterService {
     const resultMap = new Map<DATE, WeatherDate>();
     const weatherList: string[] = [];
     const dateList: string[] = [];
-    weatherDomList.forEach(dom => {
+    weatherDomList.forEach((dom) => {
       if (dom.textContent === null) {
         return;
       }
       const data = this.textSplitter(dom.textContent);
       weatherList.push(...data);
     });
-    dateDomList.forEach(dom => {
+    dateDomList.forEach((dom) => {
       if (dom.textContent === null) {
         return;
       }
@@ -51,11 +51,11 @@ export class ConverterServiceImpl implements ConverterService {
     });
     resultMap.set(DATE.TODAY, {
       weather: weatherList[0],
-      date: dateList[0]
+      date: dateList[0],
     });
     resultMap.set(DATE.TOMORROW, {
       weather: weatherList[1],
-      date: dateList[1]
+      date: dateList[1],
     });
     return resultMap;
   }
@@ -63,7 +63,7 @@ export class ConverterServiceImpl implements ConverterService {
   public temperatureDomDataFormatter(domList: NodeListOf<Element>, date: DATE): Map<TEMPERATURE, string> {
     const resultMap = new Map<TEMPERATURE, string>();
     const tempList: string[] = [];
-    domList.forEach(dom => {
+    domList.forEach((dom) => {
       if (dom.textContent === null) {
         return;
       }
@@ -81,7 +81,9 @@ export class ConverterServiceImpl implements ConverterService {
         resultMap.set(TEMPERATURE.MIN, tempList[3]);
         break;
       default:
-      // 何もしない
+        // ログだけ吐いて何もしない
+        const _date: never = date;
+        console.error(`date(${_date}) is invalid.`);
     }
     return resultMap;
   }
@@ -91,30 +93,35 @@ export class ConverterServiceImpl implements ConverterService {
     weatherDateMap: Map<DATE, WeatherDate>,
     temperatureMap: Map<TEMPERATURE, string>,
     date: DATE
-  ): DetailInformation {
+  ): string {
     const weatherDate: WeatherDate | undefined = weatherDateMap.get(date);
-
-    return new DetailInformation(
-      (weatherDate && weatherDate.date) || undefined,
-      (weatherDate && weatherDate.weather) || undefined,
-      temperatureMap.get(TEMPERATURE.MAX),
-      temperatureMap.get(TEMPERATURE.MIN),
-      indexMap.get(INDEX.WASHING),
-      indexMap.get(INDEX.UMBRELLA),
-      indexMap.get(INDEX.UV),
-      indexMap.get(INDEX.LAYERING),
-      indexMap.get(INDEX.DRY),
-      indexMap.get(INDEX.COLD),
-      indexMap.get(INDEX.HEATSTROKE),
-      indexMap.get(INDEX.BEER)
-    );
+    return detailInformationToString({
+      date: weatherDate?.date,
+      weather: weatherDate?.weather,
+      maxTemperature: temperatureMap.get(TEMPERATURE.MAX),
+      minTemperature: temperatureMap.get(TEMPERATURE.MIN),
+      washing: indexMap.get(INDEX.WASHING),
+      umbrella: indexMap.get(INDEX.UMBRELLA),
+      uv: indexMap.get(INDEX.UV),
+      layering: indexMap.get(INDEX.LAYERING),
+      dry: indexMap.get(INDEX.DRY),
+      cold: indexMap.get(INDEX.COLD),
+      heatstroke: indexMap.get(INDEX.HEATSTROKE),
+      beer: indexMap.get(INDEX.BEER),
+    });
   }
 
+  /**
+   * テキストを改行毎に分割する
+   * @param text 分割したいテキスト
+   * @returns 分割したテキスト
+   * @private
+   */
   private textSplitter(text: string): string[] {
     return text
       .replace(/ /g, '')
       .split('\n')
-      .filter(r => r !== '');
+      .filter((r) => r !== '');
   }
 
   /**
@@ -122,6 +129,7 @@ export class ConverterServiceImpl implements ConverterService {
    * @param date 取得対象が強化
    * @param key マップkey
    * @param map マップ
+   * @private
    */
   private isSkip(date: DATE, key: INDEX, map: Map<INDEX, string>): boolean {
     // 取得対象が今日の時は重複スキップする
