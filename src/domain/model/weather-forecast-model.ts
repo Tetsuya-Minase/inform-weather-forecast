@@ -64,6 +64,7 @@ type DetailInformationParameter = Partial<
     heatstroke: string;
     beer: string;
     uv: string;
+    url: string;
   }>
 >;
 
@@ -80,6 +81,7 @@ export const detailInformationToString = ({
   heatstroke,
   beer,
   uv,
+  url,
 }: DetailInformationParameter): string => {
   const result: string[] = [];
   if (date) {
@@ -115,5 +117,6 @@ export const detailInformationToString = ({
   if (beer) {
     result.push(`ビール：${beer}`);
   }
+  result.push(`url: ${url}`);
   return result.join('\n');
 };
