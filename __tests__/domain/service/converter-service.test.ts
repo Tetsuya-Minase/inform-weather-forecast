@@ -74,6 +74,7 @@ describe('test converter service today', () => {
       '重ね着：layeringComment1',
       '熱中症：heatstrokeComment1',
       'ビール：beerComment1',
+      'url: https://weather.yahoo.co.jp/weather/13/4410.html',
     ].join('\n');
     expect(service.toDetailInformation(index, weatherDate, temperature, DATE.TODAY)).toEqual(correctData);
   });
