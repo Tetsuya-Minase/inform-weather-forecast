@@ -134,6 +134,7 @@ describe('test converter service tomorrow', () => {
       '重ね着：layeringComment2',
       '熱中症：heatstrokeComment2',
       'ビール：beerComment2',
+      'url: https://weather.yahoo.co.jp/weather/13/4410.html',
     ].join('\n');
     expect(service.toDetailInformation(index, weatherDate, temperature, DATE.TOMORROW)).toEqual(correctData);
   });
