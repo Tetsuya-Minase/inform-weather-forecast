@@ -42,3 +42,6 @@ Thumbs.db
 
 # document
 /docs
+
+# logs
+/*-debug.log
