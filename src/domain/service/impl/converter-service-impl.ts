@@ -8,7 +8,7 @@ import {
   TEMPERATURE,
   WeatherDate,
 } from '../../model/weather-forecast-model';
-import { WEATHER_FORECAST_AT_TOKYO } from '../../../config/constant';
+import { WEATHER_FORECAST_AT_SAITAMA } from '../../../config/constant';
 
 @injectable()
 export class ConverterServiceImpl implements ConverterService {
@@ -109,7 +109,7 @@ export class ConverterServiceImpl implements ConverterService {
       cold: indexMap.get(INDEX.COLD),
       heatstroke: indexMap.get(INDEX.HEATSTROKE),
       beer: indexMap.get(INDEX.BEER),
-      url: WEATHER_FORECAST_AT_TOKYO,
+      url: WEATHER_FORECAST_AT_SAITAMA,
     });
   }
 
