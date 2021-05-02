@@ -7,7 +7,7 @@ import {
   TEMPERATURE,
   WeatherDate,
 } from '../model/weather-forecast-model';
-import { WEATHER_FORECAST_AT_SAITAMA } from '../../config/constant';
+import { WEATHER_FORECAST_PLACE } from '../../config/constant';
 
 @injectable()
 export class ConverterService {
@@ -131,7 +131,7 @@ export class ConverterService {
       heatstroke: indexMap.get(INDEX.HEATSTROKE),
       beer: indexMap.get(INDEX.BEER),
       ice: indexMap.get(INDEX.ICE),
-      url: WEATHER_FORECAST_AT_SAITAMA,
+      url: WEATHER_FORECAST_PLACE,
     });
   }
 

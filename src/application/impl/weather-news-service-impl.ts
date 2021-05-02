@@ -4,9 +4,9 @@ import { WeatherNewsService } from '../weather-news-service';
 import { InformSlackService } from '../../domain/service/inform-slack-service';
 import { injectable, inject } from 'inversify';
 import { TYPES } from '../../inversify.types';
-import { WEATHER_FORECAST_AT_SAITAMA } from '../../config/constant';
 import 'reflect-metadata';
 import { DATE, INDEX, TEMPERATURE, WeatherDate } from '../../domain/model/weather-forecast-model';
+import { WEATHER_FORECAST_PLACE } from '../../config/constant';
 
 @injectable()
 export class WeatherNewsServiceImpl implements WeatherNewsService {
@@ -20,7 +20,7 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
   ) {}
 
   public async informTodayWeatherInfo(): Promise<void> {
-    const domData = await this.scrapingService.fetchDomData(WEATHER_FORECAST_AT_SAITAMA);
+    const domData = await this.scrapingService.fetchDomData(WEATHER_FORECAST_PLACE);
     // 指標取得
     const indexList: NodeListOf<Element> = domData.window.document.querySelectorAll('.indexList_item');
     const indexMap: Map<INDEX, string> = this.converterService.indexDomDataFormatter(indexList, DATE.TODAY);
@@ -41,7 +41,7 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
   }
 
   public async informTomorrowWeatherInfo(): Promise<void> {
-    const domData = await this.scrapingService.fetchDomData(WEATHER_FORECAST_AT_SAITAMA);
+    const domData = await this.scrapingService.fetchDomData(WEATHER_FORECAST_PLACE);
     // 指標取得
     const indexList: NodeListOf<Element> = domData.window.document.querySelectorAll('.indexList_item');
     const indexMap: Map<INDEX, string> = this.converterService.indexDomDataFormatter(indexList, DATE.TOMORROW);
