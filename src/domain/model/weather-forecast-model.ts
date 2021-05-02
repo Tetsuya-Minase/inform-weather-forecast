@@ -13,6 +13,7 @@ export const INDEX = {
   COLD: '風邪注意',
   HEATSTROKE: '熱中症',
   BEER: 'ビール',
+  ICE: 'アイス',
 } as const;
 export type INDEX = typeof INDEX[keyof typeof INDEX];
 
@@ -40,6 +41,8 @@ export const getIndexFromText = (text: string): INDEX | undefined => {
       return INDEX.HEATSTROKE;
     case INDEX.BEER:
       return INDEX.BEER;
+    case INDEX.ICE:
+      return INDEX.ICE;
     default:
       return undefined;
   }
@@ -64,6 +67,7 @@ type DetailInformationParameter = Partial<
     heatstroke: string;
     beer: string;
     uv: string;
+    ice: string;
     url: string;
   }>
 >;
@@ -81,6 +85,7 @@ export const detailInformationToString = ({
   heatstroke,
   beer,
   uv,
+  ice,
   url,
 }: DetailInformationParameter): string => {
   const result: string[] = [];
@@ -116,6 +121,9 @@ export const detailInformationToString = ({
   }
   if (beer) {
     result.push(`ビール：${beer}`);
+  }
+  if (ice) {
+    result.push(`アイス：${ice}`);
   }
   result.push(`url: ${url}`);
   return result.join('\n');
