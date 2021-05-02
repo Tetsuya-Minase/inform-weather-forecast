@@ -7,7 +7,6 @@ import {
   TEMPERATURE,
   WeatherDate,
 } from '../model/weather-forecast-model';
-import { WEATHER_FORECAST_PLACE } from '../../config/constant';
 
 @injectable()
 export class ConverterService {
@@ -109,12 +108,14 @@ export class ConverterService {
    * @param weatherDateMap 天気と日付についてのMap
    * @param temperatureMap 気温と日付についてのMap
    * @param date 日付(今日、明日)
+   * @param place 取得場所
    */
   public toDetailInformation(
     indexMap: Map<INDEX, string>,
     weatherDateMap: Map<DATE, WeatherDate>,
     temperatureMap: Map<TEMPERATURE, string>,
-    date: DATE
+    date: DATE,
+    place: string
   ): string {
     const weatherDate: WeatherDate | undefined = weatherDateMap.get(date);
     return detailInformationToString({
@@ -131,7 +132,7 @@ export class ConverterService {
       heatstroke: indexMap.get(INDEX.HEATSTROKE),
       beer: indexMap.get(INDEX.BEER),
       ice: indexMap.get(INDEX.ICE),
-      url: WEATHER_FORECAST_PLACE,
+      url: place,
     });
   }
 

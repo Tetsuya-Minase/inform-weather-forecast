@@ -79,7 +79,15 @@ describe('test converter service today', () => {
       'アイス：iceComment1',
       'url: https://weather.yahoo.co.jp/weather/jp/11/4310.html',
     ].join('\n');
-    expect(service.toDetailInformation(index, weatherDate, temperature, DATE.TODAY)).toEqual(correctData);
+    expect(
+      service.toDetailInformation(
+        index,
+        weatherDate,
+        temperature,
+        DATE.TODAY,
+        'https://weather.yahoo.co.jp/weather/jp/11/4310.html'
+      )
+    ).toEqual(correctData);
   });
 });
 
@@ -143,6 +151,14 @@ describe('test converter service tomorrow', () => {
       'アイス：iceComment2',
       'url: https://weather.yahoo.co.jp/weather/jp/11/4310.html',
     ].join('\n');
-    expect(service.toDetailInformation(index, weatherDate, temperature, DATE.TOMORROW)).toEqual(correctData);
+    expect(
+      service.toDetailInformation(
+        index,
+        weatherDate,
+        temperature,
+        DATE.TOMORROW,
+        'https://weather.yahoo.co.jp/weather/jp/11/4310.html'
+      )
+    ).toEqual(correctData);
   });
 });
