@@ -4,7 +4,6 @@ import { WeatherNewsService } from '../weather-news-service';
 import { InformSlackService } from '../../domain/service/inform-slack-service';
 import { injectable, inject } from 'inversify';
 import { TYPES } from '../../inversify.types';
-import { WEATHER_FORECAST_AT_TOKYO } from '../../config/constant';
 import 'reflect-metadata';
 import { DATE, INDEX, TEMPERATURE, WeatherDate } from '../../domain/model/weather-forecast-model';
 
@@ -19,8 +18,12 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
     private readonly informSlackService: InformSlackService
   ) {}
 
-  public async informTodayWeatherInfo(): Promise<void> {
-    const domData = await this.scrapingService.fetchDomData(WEATHER_FORECAST_AT_TOKYO);
+  /**
+   * 今日の天気を取得する
+   * @param place 取得する場所
+   */
+  public async informTodayWeatherInfo(place: string): Promise<void> {
+    const domData = await this.scrapingService.fetchDomData(place);
     // 指標取得
     const indexList: NodeListOf<Element> = domData.window.document.querySelectorAll('.indexList_item');
     const indexMap: Map<INDEX, string> = this.converterService.indexDomDataFormatter(indexList, DATE.TODAY);
@@ -36,12 +39,22 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
       DATE.TODAY
     );
 
-    const detailData = this.converterService.toDetailInformation(indexMap, weatherDateMap, temperatureMap, DATE.TODAY);
+    const detailData = this.converterService.toDetailInformation(
+      indexMap,
+      weatherDateMap,
+      temperatureMap,
+      DATE.TODAY,
+      place
+    );
     await this.informSlackService.informMessage(`<!channel>\n${detailData}`);
   }
 
-  public async informTomorrowWeatherInfo(): Promise<void> {
-    const domData = await this.scrapingService.fetchDomData(WEATHER_FORECAST_AT_TOKYO);
+  /**
+   * 明日の天気を取得する
+   * @param place 取得する場所
+   */
+  public async informTomorrowWeatherInfo(place: string): Promise<void> {
+    const domData = await this.scrapingService.fetchDomData(place);
     // 指標取得
     const indexList: NodeListOf<Element> = domData.window.document.querySelectorAll('.indexList_item');
     const indexMap: Map<INDEX, string> = this.converterService.indexDomDataFormatter(indexList, DATE.TOMORROW);
@@ -61,7 +74,8 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
       indexMap,
       weatherDateMap,
       temperatureMap,
-      DATE.TOMORROW
+      DATE.TOMORROW,
+      place
     );
     console.log('detail tomorrow: ', detailData.toString());
     await this.informSlackService.informMessage(`<!channel>\n${detailData.toString()}`);
