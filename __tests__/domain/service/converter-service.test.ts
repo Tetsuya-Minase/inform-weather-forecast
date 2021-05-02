@@ -27,6 +27,7 @@ describe('test converter service today', () => {
       [INDEX.LAYERING, 'layeringComment1'],
       [INDEX.HEATSTROKE, 'heatstrokeComment1'],
       [INDEX.BEER, 'beerComment1'],
+      [INDEX.ICE, 'iceComment1'],
     ]);
     expect(service.indexDomDataFormatter(indexList, DATE.TODAY)).toEqual(correct);
   });
@@ -58,6 +59,7 @@ describe('test converter service today', () => {
       [INDEX.LAYERING, 'layeringComment1'],
       [INDEX.HEATSTROKE, 'heatstrokeComment1'],
       [INDEX.BEER, 'beerComment1'],
+      [INDEX.ICE, 'iceComment1'],
     ]);
     const weatherDate = new Map([[DATE.TODAY, { weather: '曇り', date: '5月15日（水）' }]]);
     const temperature = new Map([
@@ -74,7 +76,8 @@ describe('test converter service today', () => {
       '重ね着：layeringComment1',
       '熱中症：heatstrokeComment1',
       'ビール：beerComment1',
-      'url: https://weather.yahoo.co.jp/weather/13/4410.html',
+      'アイス：iceComment1',
+      'url: https://weather.yahoo.co.jp/weather/jp/11/4310.html',
     ].join('\n');
     expect(service.toDetailInformation(index, weatherDate, temperature, DATE.TODAY)).toEqual(correctData);
   });
@@ -98,6 +101,7 @@ describe('test converter service tomorrow', () => {
       [INDEX.LAYERING, 'layeringComment2'],
       [INDEX.HEATSTROKE, 'heatstrokeComment2'],
       [INDEX.BEER, 'beerComment2'],
+      [INDEX.ICE, 'iceComment2'],
     ]);
     expect(service.indexDomDataFormatter(indexList, DATE.TOMORROW)).toEqual(correct);
   });
@@ -119,6 +123,7 @@ describe('test converter service tomorrow', () => {
       [INDEX.LAYERING, 'layeringComment2'],
       [INDEX.HEATSTROKE, 'heatstrokeComment2'],
       [INDEX.BEER, 'beerComment2'],
+      [INDEX.ICE, 'iceComment2'],
     ]);
     const weatherDate = new Map([[DATE.TOMORROW, { weather: '曇時々晴', date: '5月16日（木）' }]]);
     const temperature = new Map([
@@ -135,7 +140,8 @@ describe('test converter service tomorrow', () => {
       '重ね着：layeringComment2',
       '熱中症：heatstrokeComment2',
       'ビール：beerComment2',
-      'url: https://weather.yahoo.co.jp/weather/13/4410.html',
+      'アイス：iceComment2',
+      'url: https://weather.yahoo.co.jp/weather/jp/11/4310.html',
     ].join('\n');
     expect(service.toDetailInformation(index, weatherDate, temperature, DATE.TOMORROW)).toEqual(correctData);
   });
