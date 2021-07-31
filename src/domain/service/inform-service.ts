@@ -15,8 +15,9 @@ export class InformService {
   }
 
   /**
-   * slackに通知する
-   * @param notificationData slackに通知するメッセージ
+   * 通知する
+   * @param date 天気の日付
+   * @param notificationData 通知するデータ
    */
   public async informMessage(date: string, notificationData: NotificationData) {
     const param: RequestParams = {
