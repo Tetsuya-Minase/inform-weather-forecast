@@ -1,9 +1,10 @@
 import { injectable } from 'inversify';
 import {
   DATE,
-  detailInformationToString,
+  detailInformationToNotificationData,
   getIndexFromText,
   INDEX,
+  NotificationData,
   TEMPERATURE,
   WeatherDate,
 } from '../model/weather-forecast-model';
@@ -116,10 +117,9 @@ export class ConverterService {
     temperatureMap: Map<TEMPERATURE, string>,
     date: DATE,
     place: string
-  ): string {
+  ): { date: string; notificationData: NotificationData } {
     const weatherDate: WeatherDate | undefined = weatherDateMap.get(date);
-    return detailInformationToString({
-      date: weatherDate?.date,
+    const data = detailInformationToNotificationData({
       weather: weatherDate?.weather,
       maxTemperature: temperatureMap.get(TEMPERATURE.MAX),
       minTemperature: temperatureMap.get(TEMPERATURE.MIN),
@@ -134,6 +134,10 @@ export class ConverterService {
       ice: indexMap.get(INDEX.ICE),
       url: place,
     });
+    return {
+      date: `${weatherDate?.date}の天気`,
+      notificationData: data,
+    };
   }
 
   /**

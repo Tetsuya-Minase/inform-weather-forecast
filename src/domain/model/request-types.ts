@@ -3,11 +3,17 @@ export type ResponseSuccess = {
   data: string;
 };
 export type RequestParams = {
-  url: string;
-  data: {
-    channel: string;
-    username: string;
-    text: string;
+  readonly url: string;
+  readonly data: {
+    readonly content: string;
+    readonly embeds: ReadonlyArray<{
+      readonly title: string;
+      readonly fields: ReadonlyArray<{
+        readonly name: string;
+        readonly value: string;
+        readonly inline?: boolean;
+      }>;
+    }>;
   };
 };
 export class ResponseError extends Error {

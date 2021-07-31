@@ -66,19 +66,55 @@ describe('test converter service today', () => {
       [TEMPERATURE.MAX, '23℃[+3]'],
       [TEMPERATURE.MIN, '17℃[0]'],
     ]);
-    const correctData = [
-      '5月15日（水）の天気',
-      '天気：曇り',
-      '最高気温：23℃[+3]/最低気温：17℃[0]',
-      '洗濯：washingComment1',
-      '傘：umbrellaComment1',
-      '紫外線：uv-lightComment1',
-      '重ね着：layeringComment1',
-      '熱中症：heatstrokeComment1',
-      'ビール：beerComment1',
-      'アイス：iceComment1',
-      'url: https://weather.yahoo.co.jp/weather/jp/11/4310.html',
-    ].join('\n');
+    const correctData = {
+      date: '5月15日（水）の天気',
+      notificationData: [
+        {
+          name: '天気',
+          value: '曇り',
+        },
+        {
+          name: '最高気温',
+          value: '23℃[+3]',
+        },
+        {
+          name: '最低気温',
+          value: '17℃[0]',
+        },
+        {
+          name: '洗濯',
+          value: 'washingComment1',
+        },
+        {
+          name: '傘',
+          value: 'umbrellaComment1',
+        },
+        {
+          name: '紫外線',
+          value: 'uv-lightComment1',
+        },
+        {
+          name: '重ね着',
+          value: 'layeringComment1',
+        },
+        {
+          name: '熱中症',
+          value: 'heatstrokeComment1',
+        },
+        {
+          name: 'ビール',
+          value: 'beerComment1',
+        },
+        {
+          name: 'アイス',
+          value: 'iceComment1',
+        },
+        {
+          name: 'url',
+          value: 'https://weather.yahoo.co.jp/weather/jp/11/4310.html',
+        },
+      ],
+    };
     expect(
       service.toDetailInformation(
         index,
@@ -138,19 +174,55 @@ describe('test converter service tomorrow', () => {
       [TEMPERATURE.MAX, '24℃[+3]'],
       [TEMPERATURE.MIN, '16℃[-1]'],
     ]);
-    const correctData = [
-      '5月16日（木）の天気',
-      '天気：曇時々晴',
-      '最高気温：24℃[+3]/最低気温：16℃[-1]',
-      '洗濯：washingComment2',
-      '傘：umbrellaComment2',
-      '紫外線：uv-lightComment2',
-      '重ね着：layeringComment2',
-      '熱中症：heatstrokeComment2',
-      'ビール：beerComment2',
-      'アイス：iceComment2',
-      'url: https://weather.yahoo.co.jp/weather/jp/11/4310.html',
-    ].join('\n');
+    const correctData = {
+      date: '5月16日（木）の天気',
+      notificationData: [
+        {
+          name: '天気',
+          value: '曇時々晴',
+        },
+        {
+          name: '最高気温',
+          value: '24℃[+3]',
+        },
+        {
+          name: '最低気温',
+          value: '16℃[-1]',
+        },
+        {
+          name: '洗濯',
+          value: 'washingComment2',
+        },
+        {
+          name: '傘',
+          value: 'umbrellaComment2',
+        },
+        {
+          name: '紫外線',
+          value: 'uv-lightComment2',
+        },
+        {
+          name: '重ね着',
+          value: 'layeringComment2',
+        },
+        {
+          name: '熱中症',
+          value: 'heatstrokeComment2',
+        },
+        {
+          name: 'ビール',
+          value: 'beerComment2',
+        },
+        {
+          name: 'アイス',
+          value: 'iceComment2',
+        },
+        {
+          name: 'url',
+          value: 'https://weather.yahoo.co.jp/weather/jp/11/4310.html',
+        },
+      ],
+    };
     expect(
       service.toDetailInformation(
         index,

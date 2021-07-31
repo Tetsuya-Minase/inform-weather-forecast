@@ -1,7 +1,7 @@
 import { ScrapingService } from '../../domain/service/scraping-service';
 import { ConverterService } from '../../domain/service/converter-service';
 import { WeatherNewsService } from '../weather-news-service';
-import { InformSlackService } from '../../domain/service/inform-slack-service';
+import { InformService } from '../../domain/service/inform-service';
 import { injectable, inject } from 'inversify';
 import { TYPES } from '../../inversify.types';
 import 'reflect-metadata';
@@ -14,8 +14,8 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
     private readonly scrapingService: ScrapingService,
     @inject(TYPES.ConverterService)
     private readonly converterService: ConverterService,
-    @inject(TYPES.InformSlackService)
-    private readonly informSlackService: InformSlackService
+    @inject(TYPES.InformService)
+    private readonly informSlackService: InformService
   ) {}
 
   /**
@@ -39,14 +39,14 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
       DATE.TODAY
     );
 
-    const detailData = this.converterService.toDetailInformation(
+    const { date, notificationData } = this.converterService.toDetailInformation(
       indexMap,
       weatherDateMap,
       temperatureMap,
       DATE.TODAY,
       place
     );
-    await this.informSlackService.informMessage(`<!channel>\n${detailData}`);
+    await this.informSlackService.informMessage(date, notificationData);
   }
 
   /**
@@ -70,14 +70,13 @@ export class WeatherNewsServiceImpl implements WeatherNewsService {
       DATE.TOMORROW
     );
 
-    const detailData = this.converterService.toDetailInformation(
+    const { date, notificationData } = this.converterService.toDetailInformation(
       indexMap,
       weatherDateMap,
       temperatureMap,
       DATE.TOMORROW,
       place
     );
-    console.log('detail tomorrow: ', detailData.toString());
-    await this.informSlackService.informMessage(`<!channel>\n${detailData.toString()}`);
+    await this.informSlackService.informMessage(date, notificationData);
   }
 }
