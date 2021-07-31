@@ -23,24 +23,12 @@ jobs:
       - name: deploy
         run: npm run deploy -- --token=${{secrets.FIREBASE_TOKEN}}
 
-      - name: slack-notice-failure
+      - name: notice-failure
         if: failure()
-        uses: rtCamp/action-slack-notify@v2.0.0
-        env:
-          SLACK_CHANNEL: 'ci-info'
-          SLACK_COLOR: '#3278BD'
-          SLACK_MESSAGE: 'deploy failure. :umbrella_with_rain_drops:'
-          SLACK_TITLE: inform-weather-forcast
-          SLACK_USERNAME: ci_bot
-          SLACK_WEBHOOK: ${{ secrets.SLACK_HOOK }}
+        run: |
+          curl -XPOST curl -H "Content-Type: application/json" -XPOST -d "{\"content\": \"${{ secrets.DISCORD_MENTION }} deploy failure :umbrella:\",\"embeds\": [{\"title\": \"build results\", \"color\": 14427686, \"fields\": [{\"name\": \"repository\",\"value\": \"${{ github.repository }\", {\"name\": \"action url\", \"value\": \"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"}]}]}" ${{ secrets.DISCORD_URL }}
 
       - name: slack-notice-success
         if: success()
-        uses: rtCamp/action-slack-notify@v2.0.0
-        env:
-          SLACK_CHANNEL: 'ci-info'
-          SLACK_COLOR: '#3278BD'
-          SLACK_MESSAGE: 'deploy success. :sunny:'
-          SLACK_TITLE: inform-weather-forcast
-          SLACK_USERNAME: ci_bot
-          SLACK_WEBHOOK: ${{ secrets.SLACK_HOOK }}
+        run: |
+          curl -XPOST curl -H "Content-Type: application/json" -XPOST -d "{\"content\": \"deploy success :sunny:\",\"embeds\": [{\"title\": \"build results\", \"color\": 1096065, \"fields\": [{\"name\": \"repository\",\"value\": \"${{ github.repository }\", {\"name\": \"action url\", \"value\": \"$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID\"}]}]}" ${{ secrets.DISCORD_URL }}
