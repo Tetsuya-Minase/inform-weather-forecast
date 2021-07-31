@@ -4,26 +4,32 @@ import 'reflect-metadata';
 import { TYPES } from '../../inversify.types';
 import { RequestParams } from '../model/request-types';
 import { config } from 'firebase-functions';
+import { NotificationData } from '../model/weather-forecast-model';
 
 @injectable()
-export class InformSlackService {
-  private readonly SLACK_URL: string;
+export class InformService {
+  private readonly URL: string;
 
   constructor(@inject(TYPES.HttpRequest) private readonly httpRequest: HttpRequest) {
-    this.SLACK_URL = config().slack.url;
+    this.URL = config().discord.url;
   }
 
   /**
-   * slackに通知する
-   * @param message slackに通知するメッセージ
+   * 通知する
+   * @param date 天気の日付
+   * @param notificationData 通知するデータ
    */
-  public async informMessage(message: string) {
+  public async informMessage(date: string, notificationData: NotificationData) {
     const param: RequestParams = {
-      url: this.SLACK_URL || '',
+      url: this.URL || '',
       data: {
-        channel: '#weather',
-        username: 'weather-forecast-kun',
-        text: message,
+        content: '@everyone',
+        embeds: [
+          {
+            title: date,
+            fields: notificationData,
+          },
+        ],
       },
     };
     console.info('request param:', param);
