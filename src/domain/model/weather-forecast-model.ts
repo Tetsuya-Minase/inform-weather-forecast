@@ -72,8 +72,12 @@ type DetailInformationParameter = Partial<
   }>
 >;
 
-export const detailInformationToString = ({
-  date,
+export type NotificationData = Array<{
+  readonly name: INDEX | TEMPERATURE | 'url' | '天気';
+  readonly value: string;
+}>;
+
+export const detailInformationToNotificationData = ({
   weather,
   maxTemperature,
   minTemperature,
@@ -87,44 +91,42 @@ export const detailInformationToString = ({
   uv,
   ice,
   url,
-}: DetailInformationParameter): string => {
-  const result: string[] = [];
-  if (date) {
-    result.push(`${date}の天気`);
-  }
+}: DetailInformationParameter): NotificationData => {
+  const result: NotificationData = [];
   if (weather) {
-    result.push(`天気：${weather}`);
+    result.push({ name: '天気', value: weather });
   }
   if (maxTemperature && minTemperature) {
-    result.push(`最高気温：${maxTemperature}/最低気温：${minTemperature}`);
+    result.push({ name: '最高気温', value: maxTemperature });
+    result.push({ name: '最低気温', value: minTemperature });
   }
   if (washing) {
-    result.push(`洗濯：${washing}`);
+    result.push({ name: '洗濯', value: washing });
   }
   if (umbrella) {
-    result.push(`傘：${umbrella}`);
+    result.push({ name: '傘', value: umbrella });
   }
   if (uv) {
-    result.push(`紫外線：${uv}`);
+    result.push({ name: '紫外線', value: uv });
   }
   if (layering) {
-    result.push(`重ね着：${layering}`);
+    result.push({ name: '重ね着', value: layering });
   }
   if (dry) {
-    result.push(`乾燥：${dry}`);
+    result.push({ name: '乾燥', value: dry });
   }
   if (cold) {
-    result.push(`風邪注意：${cold}`);
+    result.push({ name: '風邪注意', value: cold });
   }
   if (heatstroke) {
-    result.push(`熱中症：${heatstroke}`);
+    result.push({ name: '熱中症', value: heatstroke });
   }
   if (beer) {
-    result.push(`ビール：${beer}`);
+    result.push({ name: 'ビール', value: beer });
   }
   if (ice) {
-    result.push(`アイス：${ice}`);
+    result.push({ name: 'アイス', value: ice });
   }
-  result.push(`url: ${url}`);
-  return result.join('\n');
+  result.push({ name: 'url', value: url || 'https://weather.yahoo.co.jp/weather/' });
+  return result;
 };
