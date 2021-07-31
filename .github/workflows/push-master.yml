@@ -16,12 +16,12 @@ jobs:
         with:
           node-version: 12
 
-#      - name: install and setup config
-#        run: |
-#          npm install
-#
-#      - name: deploy
-#        run: npm run deploy -- --token=${{secrets.FIREBASE_TOKEN}}
+      - name: install and setup config
+        run: |
+          npm install
+
+      - name: deploy
+        run: npm run deploy -- --token=${{secrets.FIREBASE_TOKEN}}
 
       - name: notice-failure
         if: failure()
