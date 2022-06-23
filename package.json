@@ -28,7 +28,7 @@
     "firebase-functions": "^3.13.2",
     "firebase-tools": "^9.6.1",
     "inversify": "^5.0.1",
-    "jsdom": "^15.2.0",
+    "jsdom": "^16.5.0",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.15",
     "ts-loader": "^8.0.5",
