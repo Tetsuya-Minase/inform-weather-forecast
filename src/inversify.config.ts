@@ -7,14 +7,17 @@ import { InformService } from './domain/service/inform-service';
 import { ScrapingService } from './domain/service/scraping-service';
 import { HttpRequest } from './infrastructure/http-request';
 import { HttpRequestImpl } from './infrastructure/impl/http-request-impl';
+import { DiscordConfig } from './config/discord-config';
 import { WeatherNews } from './interface/weather-news';
 
-const container = new Container({ defaultScope: 'Singleton' });
-container.bind<WeatherNewsService>(TYPES.WeatherNewsService).to(WeatherNewsServiceImpl);
-container.bind<ConverterService>(TYPES.ConverterService).to(ConverterService);
-container.bind<InformService>(TYPES.InformService).to(InformService);
-container.bind<ScrapingService>(TYPES.ScrapingService).to(ScrapingService);
-container.bind<HttpRequest>(TYPES.HttpRequest).to(HttpRequestImpl);
-container.bind<WeatherNews>(TYPES.WeatherNews).to(WeatherNews);
-
-export { container };
+export const createContainer = (config: DiscordConfig): Container => {
+  const container = new Container({ defaultScope: 'Singleton' });
+  container.bind<DiscordConfig>(TYPES.DiscordConfig).toConstantValue(config);
+  container.bind<WeatherNewsService>(TYPES.WeatherNewsService).to(WeatherNewsServiceImpl);
+  container.bind<ConverterService>(TYPES.ConverterService).to(ConverterService);
+  container.bind<InformService>(TYPES.InformService).to(InformService);
+  container.bind<ScrapingService>(TYPES.ScrapingService).to(ScrapingService);
+  container.bind<HttpRequest>(TYPES.HttpRequest).to(HttpRequestImpl);
+  container.bind<WeatherNews>(TYPES.WeatherNews).to(WeatherNews);
+  return container;
+};

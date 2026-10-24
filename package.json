@@ -2,36 +2,26 @@
   "name": "inform-slack-about-weather-forecast",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/app.js",
+  "main": "dist/main.js",
   "scripts": {
-    "build": "webpack --config webpack.config.js",
-    "start": "node ./dist/app.js",
+    "build": "tsc",
+    "start": "node dist/main.js",
     "fix:format": "prettier 'src/**/*.ts' --write",
     "lint:format": "prettier 'src/**/*.ts' -c",
     "prettier": "prettier",
-    "test": "jest",
-    "firebase": "firebase",
-    "deploy": "firebase deploy --only functions",
-    "remove": "firebase functions:delete",
-    "config": "firebase functions:config:set"
+    "test": "jest"
   },
   "engines": {
-    "node": "12"
+    "node": ">=22"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@slack/webhook": "^5.0.2",
     "axios": "^0.21.1",
-    "firebase": "^8.3.1",
-    "firebase-admin": "^9.5.0",
-    "firebase-functions": "^3.13.2",
-    "firebase-tools": "^9.6.1",
     "inversify": "^5.0.1",
     "jsdom": "^15.2.0",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.15",
-    "ts-loader": "^8.0.5",
     "typescript": "^4.0.3"
   },
   "devDependencies": {
@@ -45,23 +35,15 @@
     "@types/request": "^2.48.3",
     "@typescript-eslint/eslint-plugin": "^2.6.0",
     "@typescript-eslint/parser": "^4.4.1",
-    "babel-loader": "^8.0.6",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "eslint": "^7.11.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-prettier": "^6.12.0",
-    "eslint-loader": "^4.0.2",
     "eslint-plugin-prettier": "^3.1.4",
     "express": "^4.17.1",
-    "firebase-functions-test": "^0.1.6",
     "jest": "^26.5.3",
-    "node-loader": "^0.6.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^2.1.2",
-    "ts-jest": "^26.4.1",
-    "uglifyjs-webpack-plugin": "^2.2.0",
-    "webpack": "^5.1.2",
-    "webpack-cli": "^3.3.9",
-    "webpack-node-externals": "^1.7.2"
+    "ts-jest": "^26.4.1"
   }
 }

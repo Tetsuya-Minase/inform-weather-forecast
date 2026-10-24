@@ -9,18 +9,22 @@ jobs:
   check_pull_request:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
 
       - name: setup
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 12
+          node-version: 22
+          cache: npm
 
-      - name: install and setup config
-        run: npm install
+      - name: install
+        run: npm ci
 
       - name: lint
         run: npm run lint:format
 
       - name: test
         run: npm test
+
+      - name: build
+        run: npm run build
