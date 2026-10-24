@@ -1,10 +1,12 @@
-import { container } from '../../../src/inversify.config';
+import { createContainer } from '../../../src/inversify.config';
 import { ConverterService } from '../../../src/domain/service/converter-service';
 import { TYPES } from '../../../src/inversify.types';
 import { JSDOM } from 'jsdom';
 import * as fs from 'fs';
 import * as path from 'path';
 import { DATE, INDEX, TEMPERATURE, WeatherDate } from '../../../src/domain/model/weather-forecast-model';
+
+const container = createContainer({ url: 'https://example.test/hook', mention: '' });
 
 // mockHTML読み込み
 const html = fs.readFileSync(path.join(__dirname, '../../resources/converter-test.html'), 'utf-8');

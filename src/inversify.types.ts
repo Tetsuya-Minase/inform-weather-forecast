@@ -4,6 +4,7 @@ const TYPES = {
   InformService: Symbol.for('InformService'),
   ScrapingService: Symbol.for('ScrapingService'),
   HttpRequest: Symbol.for('HttpRequest'),
+  DiscordConfig: Symbol.for('DiscordConfig'),
   WeatherNews: Symbol.for('WeatherNews'),
 };
 

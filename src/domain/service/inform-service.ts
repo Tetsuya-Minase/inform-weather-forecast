@@ -3,16 +3,15 @@ import { inject, injectable } from 'inversify';
 import 'reflect-metadata';
 import { TYPES } from '../../inversify.types';
 import { RequestParams } from '../model/request-types';
-import { config } from 'firebase-functions';
+import { DiscordConfig } from '../../config/discord-config';
 import { NotificationData } from '../model/weather-forecast-model';
 
 @injectable()
 export class InformService {
-  private readonly URL: string;
-
-  constructor(@inject(TYPES.HttpRequest) private readonly httpRequest: HttpRequest) {
-    this.URL = config().discord.url;
-  }
+  constructor(
+    @inject(TYPES.HttpRequest) private readonly httpRequest: HttpRequest,
+    @inject(TYPES.DiscordConfig) private readonly discordConfig: DiscordConfig
+  ) {}
 
   /**
    * 通知する
@@ -21,9 +20,9 @@ export class InformService {
    */
   public async informMessage(date: string, notificationData: NotificationData) {
     const param: RequestParams = {
-      url: this.URL || '',
+      url: this.discordConfig.url,
       data: {
-        content: '@everyone',
+        content: this.discordConfig.mention,
         embeds: [
           {
             title: date,

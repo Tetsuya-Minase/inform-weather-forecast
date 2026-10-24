@@ -27,7 +27,7 @@ export class HttpRequestImpl implements HttpRequest {
     const response = await axios.post(param.url, param.data, {
       headers: this.header,
     });
-    if (response.status !== 200) {
+    if (response.status < 200 || response.status >= 300) {
       console.error('post error:', response.data);
       throw new ResponseError(response.status, response.data, response.statusText);
     }
