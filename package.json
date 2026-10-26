@@ -12,7 +12,7 @@
     "test": "jest"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
   },
   "author": "",
   "license": "ISC",
